@@ -15,3 +15,33 @@
         }
     }
 }
+
+.share-page{
+  &__icon{
+    font-size: 1.6em;
+  }
+}
+
+.social-media-list{
+  &__icon{
+    font-size: 1.8em;
+    &:hover{
+      text-decoration: none;
+    }
+  }
+}
+
+.site-footer{
+  &__wrapper{
+    max-width: 1200px;
+    padding: 0 20px;
+    margin: auto;
+  }
+  
+  &__dp{
+    width:150px;
+    height:150px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+}

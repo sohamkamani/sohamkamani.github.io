@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Understand node without losing your mind"
+title:  "How to work with NodeJS and not lose your mind"
 date:   2015-08-21 18:45:12
 categories: jekyll update
 ---
