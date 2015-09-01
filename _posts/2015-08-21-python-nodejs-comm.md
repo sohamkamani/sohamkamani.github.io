@@ -3,6 +3,7 @@ layout: post
 title:  "How to communicate between Python and NodeJs"
 date:   2015-08-21 18:45:12
 categories: jekyll update
+comments: true
 ---
 <div dir="ltr" style="text-align: left;" trbidi="on">
 NodeJs is amazing at a lot of things, but one area where it falls short is numerical and scientific computation. Python, on the other hand, is great for stuff like that, and libraries like numpy and scipy make scientific computing a breeze. Fortunately, we can utilize the power of numpy within our node application, by calling a python process to run in the background, do all the dirty work and give back the result.<br />

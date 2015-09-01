@@ -13,5 +13,9 @@ layout: default
   </article>
   
   {% include share-page.html %}
+  
+  {% if page.comments %}
+  {% include comment-section.html %}
+  {% endif %}
 
 </div>
