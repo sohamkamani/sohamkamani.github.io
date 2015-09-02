@@ -3,6 +3,7 @@ layout: post
 title:  "How to work with NodeJS and not lose your mind"
 date:   2015-08-21 18:45:12
 categories: jekyll update
+comments: true
 ---
 <p>NodeJS is great! Its fast, its event based, and it uses the same language front-end developers know and love in he server as well. One of the greatest features of nodeJs is its non-blocking nature, which means that operations which seemed expensive before, like reading user input, and database operations, are now not a problem. Unfortunately this is also one of one of the most dangerous aspects of nodeJs as it makes it really easy for developers to write horrible code.
 The non-blocking IO means that you now rely on callbacks to perform tasks after an operation has occured, which can lead to quite a messy situation. </p>
