@@ -16,6 +16,16 @@ Most browsers don't support all the specifications of ES6, so we would have to s
 We will also be using a node module called [object-assign](https://www.npmjs.com/package/object-assign) a lot. This is just an implementation of the native Object.assign for environments that don't support it.
 
 Our source file structure will look something like this :
+{% highlight text %}
+src
+├── Component.js
+├── Renderer.js
+├── drawings
+│   └── Square.js
+├── index.js
+└── motions
+    └── LinearMotion.js
+{% endhighlight %}
 
 ## Building Blocks
 
@@ -174,12 +184,13 @@ Finally, we implement the ```getCurrentPosition``` method to return only the ```
 Now that we have all our building blocks and framework ready, lets put it all together.
 
 {% highlight js %}
+//src/index.js
 'use strict';
 
-import Renderer from './lib/Renderer';
-import Component from './lib/Component';
-import Square from './lib/Square';
-import LinearMotion from './lib/LinearMotion';
+import Renderer from './Renderer';
+import Component from './Component';
+import Square from './drawings/Square';
+import LinearMotion from './motions/LinearMotion';
 
 //Initialize a new renderer. "myCanvas" is the id of our HTML canvas element.
 const renderer = new Renderer('myCanvas');
@@ -216,3 +227,88 @@ const render = ()=>{
 };
 render();
 {% endhighlight %}
+
+And thats it! Now bundle and compile this file using your favorite module bundler and insert it into your ```index.html``` file.
+
+{% highlight html %}
+<html>
+
+<head>
+  <title>My Canvas Animation</title>
+</head>
+
+<body>
+  <canvas id="myCanvas" width="600px" height="400px"></canvas>
+  <script src="bundle.js" ></script>
+</body>
+
+</html>
+{% endhighlight %}
+
+If all goes well, once you open your index.html file, you should get something that looks like this :
+
+![Example Image](http://www.sohamkamani.com/blog-example__canvas-animation-framework/extras/images/square_linear.gif)
+
+Pretty cool, but we still haven't seen the full power of organizing your code properly. Lets put in one more square, but this time, we want a more natural kind of motion. Something like how object moves when oscillating on a string. Lets make a new SpringMotion constructor for this.
+
+{% highlight js %}
+//src/motions/SpringMotion.js
+'use strict';
+import assign from 'object-assign';
+
+let SpringMotion = function(options){
+  assign(this, options);
+};
+
+module.exports = SpringMotion;
+
+SpringMotion.prototype.move = function(){
+  let {a, v, s, center, k} = this;
+  v = v || 0;
+  let distanceFromCenter = center - s ;
+  a = k * distanceFromCenter;
+  v += a;
+  s += v;
+  assign(this,{a, v, s});
+};
+
+SpringMotion.prototype.getCurrentPosition = function(){
+  let {s} = this;
+  return {
+    x : s
+  };
+};
+{% endhighlight %}
+
+I won't get into the detail of this kind of motion as it involves a little bit of extra [theory](https://en.wikipedia.org/wiki/Hooke%27s_law) which could take a whole blog post on its own.
+Now all we have to do to add a new square with this spring motion is to modify ```index.js``` by adding the following code :
+
+{% highlight js %}
+let springSquare = new Square({
+  width : 25,
+  height : 25,
+  position : {
+    x : 100,
+    y : 40
+  }
+});
+
+let springMotion = new SpringMotion({
+    center: 100,
+    s: 150,
+    k: 3e-3
+  });
+
+renderer.addComponent(new Component({
+  motion : springMotion,
+  drawing : springSquare
+}));
+{% endhighlight %}
+
+So the only thing that we modified was the y position of the square and the type of motion.
+
+![Example Image](http://www.sohamkamani.com/blog-example__canvas-animation-framework/extras/images/square_spring.gif)
+
+Awesome! As you can see the motion of the second square looks much more natural, gradually slowing at the edges and speeding past the center. Additionally, we did not *change* any of our source files, just added another type of motion.
+
+Hopefully now you're all set to get animating with HTML and canvas. If you're still doubtful, heres the live [working example](http://www.sohamkamani.com/blog-example__canvas-animation-framework/) along with the complete [source code](https://github.com/sohamkamani/blog-example__canvas-animation-framework).
