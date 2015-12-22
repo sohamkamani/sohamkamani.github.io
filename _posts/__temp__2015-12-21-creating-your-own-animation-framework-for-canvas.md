@@ -16,7 +16,7 @@ Most browsers don't support all the specifications of ES6, so we would have to s
 We will also be using a node module called [object-assign](https://www.npmjs.com/package/object-assign) a lot. This is just an implementation of the native Object.assign for environments that don't support it.
 
 Our source file structure will look something like this :
-{% highlight text %}
+```text
 src
 ├── Component.js
 ├── Renderer.js
@@ -25,13 +25,13 @@ src
 ├── index.js
 └── motions
     └── LinearMotion.js
-{% endhighlight %}
+```
 
 ## Building Blocks
 
 Lets see a top-down approach to making our animation more manageable. Firstly, we need a renderer. This will be responsible for updating and painting all our components on to the canvas. Nothing more, nothing less.
 
-{% highlight javascript %}
+```js
 //src/Renderer.js
 'use strict';
 
@@ -64,7 +64,7 @@ Renderer.prototype.paint = function(){
   });
   self.ctx.stroke();
 };
-{% endhighlight %}
+```
 
 The ```Renderer``` has a constructor 3 methods :
 
@@ -80,7 +80,7 @@ The ```Renderer``` has a constructor 3 methods :
 
 Now that we have our renderer in place, we need to make the structure for a generic ```Component```, whose methods the renderer keeps calling so often.
 
-{% highlight javascript %}
+```js
 //src/Component.js
 'use strict';
 
@@ -102,7 +102,7 @@ Component.prototype.draw = function(ctx){
   let {drawing} = this;
   drawing.draw(ctx);
 };
-{% endhighlight %}
+```
 
 Pretty simple compared to Renderer. The constructor just assigns the options we pass it to ```this```.
 Fundamentally, every component in animation will have two aspects that define it. The way it draws, and the way its state changes (in our case, this is represented by the way it moves, or its motion). ```motion``` and ```drawing``` are again two generic components, whose only requirement is that they implement a fixed set of methods. (```move``` and ```getCurrentPosition``` in the case of motion, and ```draw``` in the case of drawing).
@@ -112,7 +112,7 @@ Fundamentally, every component in animation will have two aspects that define it
 In our example, we require a *square* which moves *linearly* (up and down a straight line).
 
 Lets define a ```Square``` drawing and a ```LinearMotion```.
-{% highlight js %}
+```js
 //src/drawings/Square.js
 'use strict';
 import assign from 'object-assign';
@@ -130,11 +130,11 @@ Square.prototype.draw = function (ctx) {
   ctx.rect(self.position.x, self.position.y, self.width, self.height);
   ctx.fill();
 };
-{% endhighlight %}
+```
 
 Pretty self explanatory. A ```square``` implements a ```draw``` method which draws a square on to the canvas based on the options you give it. ctx here is the 2d canvas context.
 
-{% highlight js %}
+```js
 //src/motions/LinearMotion.js
 'use strict';
 
@@ -173,7 +173,7 @@ LinearMotion.prototype.getCurrentPosition = function(){
     x
   };
 };
-{% endhighlight %}
+```
 
 The ```move``` method of LinearMotion has a bit of math in it, but in a nutshell, we assign a "center" and a "maximum distance from the center". On each call of the ```move``` method, we advance the distance from the center by the assigned speed, and in the appropriate direction (positive or negative depending on the direction) If the distance exceeds the maximum distance from the center, we reverse the direction. This will result in a back and fourth movement about the center.
 
@@ -183,7 +183,7 @@ Finally, we implement the ```getCurrentPosition``` method to return only the ```
 
 Now that we have all our building blocks and framework ready, lets put it all together.
 
-{% highlight js %}
+```js
 //src/index.js
 'use strict';
 
@@ -226,11 +226,11 @@ const render = ()=>{
   renderer.paint();
 };
 render();
-{% endhighlight %}
+```
 
 And thats it! Now bundle and compile this file using your favorite module bundler and insert it into your ```index.html``` file.
 
-{% highlight html %}
+```html```
 <html>
 
 <head>
@@ -243,7 +243,7 @@ And thats it! Now bundle and compile this file using your favorite module bundle
 </body>
 
 </html>
-{% endhighlight %}
+```
 
 If all goes well, once you open your index.html file, you should get something that looks like this :
 
@@ -251,7 +251,7 @@ If all goes well, once you open your index.html file, you should get something t
 
 Pretty cool, but we still haven't seen the full power of organizing your code properly. Lets put in one more square, but this time, we want a more natural kind of motion. Something like how object moves when oscillating on a string. Lets make a new SpringMotion constructor for this.
 
-{% highlight js %}
+```js
 //src/motions/SpringMotion.js
 'use strict';
 import assign from 'object-assign';
@@ -278,12 +278,12 @@ SpringMotion.prototype.getCurrentPosition = function(){
     x : s
   };
 };
-{% endhighlight %}
+```
 
 I won't get into the detail of this kind of motion as it involves a little bit of extra [theory](https://en.wikipedia.org/wiki/Hooke%27s_law) which could take a whole blog post on its own.
 Now all we have to do to add a new square with this spring motion is to modify ```index.js``` by adding the following code :
 
-{% highlight js %}
+```js
 let springSquare = new Square({
   width : 25,
   height : 25,
@@ -303,7 +303,7 @@ renderer.addComponent(new Component({
   motion : springMotion,
   drawing : springSquare
 }));
-{% endhighlight %}
+```
 
 So the only thing that we modified was the y position of the square and the type of motion.
 
