@@ -154,7 +154,8 @@ namespace :deploy do
   end
 end
 ```
-Here we see three tasks performed on deployment :
+
+Here we see three tasks performed on deployment :  
 1. **Install node modules** : Quite obviously, this installs our node modules. But the important thing to remember is to add ```node_modules``` as a linked directory, otherwise your node modules will be installed in different folders each time you deploy, which is definitely not good in the long run.  
 1. **Run Tests** : Runs tests, through the ```npm test``` command.  
 1. **Restart Server** : This executes the ```npm run pm2``` command we discussed previously, but before that, it sets the ```APP_NAME```   variable as the name of our application (in this case "my_app"). This value is then used through the whole chain of npm commands (which is where $APP_NAME appears).  
