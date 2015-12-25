@@ -37,7 +37,7 @@ First up, lets talk about how all our files are going to be structured.
 └── test.js
 ```
 Make sure you have [capistrano](http://capistranorb.com/#), [pm2](https://github.com/Unitech/pm2), and [npm](https://www.npmjs.com/) installed. You can generate your own package.json by running the command ```npm init``` and you can generate the Capfile, along with a few useful others by running ```cap install```.
-You can find the complete code here.
+You can find the complete code [here](https://github.com/sohamkamani/blog-example__cap).
 Lets take a look at the important files in detail.
 
 ### app.js
@@ -156,7 +156,7 @@ end
 ```
 
 Here we see three tasks performed on deployment :  
-  
+
 1. **Install node modules** : Quite obviously, this installs our node modules. But the important thing to remember is to add ```node_modules``` as a linked directory, otherwise your node modules will be installed in different folders each time you deploy, which is definitely not good in the long run.  
 2. **Run Tests** : Runs tests, through the ```npm test``` command.  
 3. **Restart Server** : This executes the ```npm run pm2``` command we discussed previously, but before that, it sets the ```APP_NAME```   variable as the name of our application (in this case "my_app"). This value is then used through the whole chain of npm commands (which is where $APP_NAME appears).  
@@ -180,3 +180,5 @@ This will :
 - Start the server using pm2.
 
 By convention, when you run ```cap foobar deploy``` , capstrano runs the tasks defined in the deploy namespace in deploy.rb, against the settings defined in config/deploy/foobar.rb. This means that if you want to deploy to another server (say, your staging or production server), all you have to do is add staging.rb and production.rb to your config/deply folder, then run ```cap staging deploy``` or ```cap production deploy```. Its as easy as that.
+
+If you want the complete source code for this example, you can see it [here](https://github.com/sohamkamani/blog-example__cap)
