@@ -13,6 +13,4 @@ highlighter: pygments
 permalink: blog/:year/:month/:day/:title/
 
 # Build settings
-markdown: kramdown
-kramdown:
-  input: GFM
+markdown: redcarpet
