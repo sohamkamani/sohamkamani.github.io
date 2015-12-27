@@ -69,6 +69,15 @@ module.exports = function(){
 
 And thats it! Now execute `npm publish .` and your node module will be published to npmjs.org. Also, anyone can now install your node module by running `npm install --save module_name`, where module name is the "name" property contained in package.json.
 
+Now anyone can use your module like this :
+
+```js
+var someModule = require('module_name');
+
+console.log(someModule());
+// This will output "Hello World!"
+```
+
 ## Dependencies
 
 As stated before, rarely will you find large scale node modules which do not depend on other smaller modules. This is because npm encourages modularity and composability. To add dependancies to your own module, simply install them. For example, one of the most depended upon packages is lodash, a utility library. To add this, run the command :
@@ -102,5 +111,3 @@ Although it's really simple to make a basic node module, it can be quite a task 
 - Installing standard dev dependencies for testing.
 
 Fortunately, there are many Yeoman generators to help you bootstrap your project. Check out [generator-nm](https://github.com/sindresorhus/generator-nm) for setting up a basic project structure for a simple node module. If writing in ES6 is more your style, you can take a look at [generator-nm-es6](https://github.com/sohamkamani/generator-nm-es6). These generators get your project structure, complete with a testing framework and CI integration so that you don't have to spend all your time writing boilerplate code.
-
-## Publish
