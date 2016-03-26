@@ -1,12 +1,8 @@
 ---
 layout: default-blog
-title: about
 ---
 
-
 <div class="home">
-
-  <h1 class="page-heading">Posts</h1>
 
   <ul class="post-list">
     {% for post in paginator.posts %}
@@ -15,9 +11,11 @@ title: about
 
       <h2>
           <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-        {{ post.excerpt }}<br>
-           <a href="{{ post.url }}">Read more...</a><br><br>
+        </h2> {{ post.excerpt }}
+      <br>
+      <a href="{{ post.url }}">Read more...</a>
+      <br>
+      <br>
     </li>
     {% endfor %}
   </ul>
@@ -28,8 +26,7 @@ title: about
   <div class="pagination" style="text-align: center;">
 
     {% if paginator.next_page %}
-    <h2><a href="{{ paginator.next_page_path }}" class="next">- more posts -</a></h2> {% endif %}
-    {% if paginator.previous_page %}
+    <h2><a href="{{ paginator.next_page_path }}" class="next">- more posts -</a></h2> {% endif %} {% if paginator.previous_page %}
     <h2><a href="{{ paginator.previous_page_path }}" class="previous">- previous page -</a></h2> {% endif %}
 
   </div>

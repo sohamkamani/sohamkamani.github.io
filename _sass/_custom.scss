@@ -7,11 +7,19 @@
         border: 0;
         text-align: center;
         a{
-        color: #fff;  
+        color: #fff;
         &:hover{
             text-decoration: none;
             color: #BBDEFB;
         }
+        }
+
+        &--align-middle{
+          vertical-align:middle;
+        }
+
+        .social-media-list__icon{
+          margin: 0 10px;
         }
     }
 }
@@ -37,7 +45,7 @@
     padding: 0 20px;
     margin: auto;
   }
-  
+
   &__dp{
     width:150px;
     height:150px;
