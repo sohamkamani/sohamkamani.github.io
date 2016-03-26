@@ -98,3 +98,8 @@ And thats all there is to it. Just run start.js on your terminal to verify that 
 Although for a simple summing operation you're better off sticking to nodeJs itself, for more complex operations(like maybe doing signal processing or finding the frequency spectrum on a series of numbers) its highly advisable to use numpy as the same functionality is just not there in nodeJs (at least not yet). Furthermore, computationally intensive operations will most likely freeze your program, which can be a disaster given the single threaded architecture of node, and they should be moved to their own separate child processes.<br />
 <br />
 </div>
+
+### Related
+
+- [Top 10 mistakes that python programmers make](https://www.toptal.com/python/top-10-mistakes-that-python-programmers-make)
+- [How to work with NodeJS and not lose your mind](/blog/2015/08/22/understand_node_without_losing_your_mind/)
