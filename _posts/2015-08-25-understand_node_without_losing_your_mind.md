@@ -7,7 +7,7 @@ comments: true
 ---
 <p>NodeJS is great! Its fast, its event based, and it uses the same language front-end developers know and love in he server as well. One of the greatest features of nodeJs is its non-blocking nature, which means that operations which seemed expensive before, like reading user input, and database operations, are now not a problem. Unfortunately this is also one of one of the most dangerous aspects of nodeJs as it makes it really easy for developers to write horrible code.
 The non-blocking IO means that you now rely on callbacks to perform tasks after an operation has occured, which can lead to quite a messy situation. </p>
-
+<!-- more -->
 <p>Lets take a look at a simple example to get to know what exactly I mean.</p>
 <p>FYI, In all the snippets below, I use the callback structure of expressJs, since it is the most popular backend framework for nodeJs. As for the database operations, I use the Waterline ORM, which uses the general format of :</p>
 {% highlight javascript %}
@@ -126,4 +126,3 @@ var someOtherRoute = function(req, res){
 {% endhighlight %}
 
 <p> Hopefully now dealing with the increasing number of callbacks and async operations won't be as much of a pain as it was originally. Of course, there is no such thing as the 'best' solution to deal with this kind of callback hell, and there are many, many more solutions (like the async library, promises and ES6 generators) to make your life easier. The one thing in my opinion to keep in mind, regardless of the method you use, is to follow the DRY (dont repeat yourself) principle, so that the same functionality, or functionality that is likely to be used again, is not isolated from the rest of the code, and can be called easily as and when required.</p>
-

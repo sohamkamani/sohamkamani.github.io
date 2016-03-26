@@ -14,17 +14,16 @@ author: Soham Kamani
 This post is about creating a hello world application using jspm and ES6 with ReactJs.
 
 Feeling lazy and just want to see the code? [Go Here](http://github.com/sohamkamani/jspm-es6-react-bootstrap/)
- 
-Although jspm and ES6 can be used for any type of application, I have specifically targeted [React](http://facebook.github.io/react/) because I feel that the intentions of ES6's module loading specification and ReactJs are all focused on the same thing, and that is componentization -- separating your logic into small byte sized pieces. Throwing a mountain of script tags in your index.html file for a single page application is just not as appealing as it used to be. The ES6 way of doing things is to only import a piece of functionality when you need it. This marries really well with Reacts principle of separating your markup into its individual components, so its only natural that both of them be used together. Don't worry... if you've never heard of jspm before, it's really friendly to new-comers :)
 
+Although jspm and ES6 can be used for any type of application, I have specifically targeted [React](http://facebook.github.io/react/) because I feel that the intentions of ES6's module loading specification and ReactJs are all focused on the same thing, and that is componentization -- separating your logic into small byte sized pieces. Throwing a mountain of script tags in your index.html file for a single page application is just not as appealing as it used to be. The ES6 way of doing things is to only import a piece of functionality when you need it. This marries really well with Reacts principle of separating your markup into its individual components, so its only natural that both of them be used together. Don't worry... if you've never heard of jspm before, it's really friendly to new-comers :)<!-- more -->
 I'm not going to go into the details of what jspm is because it's explained really well on [their website](http://jspm.io/), so lets just dive into bootstrapping our hello world application.
 
 <ol>
 <li> Install jspm, if you haven't already:<br/>
    <code>npm install -g jspm</code>
-</li> 
- 
-<li> 
+</li>
+
+<li>
 Make a new directory, and initialize a new jspm project:  <br/>
   <code>jspm init</code>  <br/>
   And install all the dependencies we will require:<br>  
@@ -42,17 +41,17 @@ Make a new directory, and initialize a new jspm project:  <br/>
   │   ├── system.js.map  <br/>
   │   └── system.src.js  <br/>
   └── package.json
-</li> 
+</li>
 
 <li> Now to write out index.html file, which will be put into the root of the project.
 {% highlight html %}
-<!--index.html--> 
+<!--index.html-->
 <html>
 
 <head>
     <title>JSPM Experiment</title>
 </head>
-  
+
 <body>
     <div id="container"></div>
     <script src="jspm_packages/system.js"></script>
@@ -61,9 +60,9 @@ Make a new directory, and initialize a new jspm project:  <br/>
     </script>
 </body>
 
-</html> 
+</html>
 {% endhighlight %}
-   <em>What? Is that it?</em> 
+   <em>What? Is that it?</em>
    Yep, thats it. And most likely, for most of your projects, that would be the only content that will ever be in your index.html file.
 </li>
 <li>
@@ -72,7 +71,7 @@ Make a new directory, and initialize a new jspm project:  <br/>
 {% highlight javascript %}
 //start.js
 import './lib/react_render';
-{% endhighlight %} 
+{% endhighlight %}
 </li>
 <li>
   All of your js files will be in the src directory. Here, react_render.js is the script that finally renders all your react components.
@@ -138,5 +137,3 @@ And... thats it! Run a local server on the root directory of the project and ope
 As you may have noticed, most of our scripts are pretty small, barely exceeding 20 lines of code. This is because each piece of logic (in this case each react component) is contained in its own file. And, as a bonus, we get all the awesome new features of ES6 to play around with.
 <br>
 If you got lost at any point, here's the <a href="http://github.com/sohamkamani/jspm-es6-react-bootstrap/">source</a> for the entire project.
-
-

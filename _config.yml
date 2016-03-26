@@ -17,3 +17,5 @@ paginate: 8
 paginate_path: "/blog/page:num/"
 gems: [jekyll-paginate]
 markdown: kramdown
+
+excerpt_separator: "<!-- more -->"

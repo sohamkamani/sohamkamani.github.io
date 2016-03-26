@@ -9,7 +9,8 @@ comments: true
 NodeJs is amazing at a lot of things, but one area where it falls short is numerical and scientific computation. Python, on the other hand, is great for stuff like that, and libraries like numpy and scipy make scientific computing a breeze. Fortunately, we can utilize the power of numpy within our node application, by calling a python process to run in the background, do all the dirty work and give back the result.<br />
 In this tutorial, we will be using the <code>child_process</code> standard library in nodeJs to spawn a python process which will compute the sum of all elements in an array, using numpy, and return back the result to our node program.<br />
 If you want to skip the whole tutorial and just get your hands dirty, copy start.js and compute_input.py into the same directory, and run the command<br /><code>node start.js</code><br />on your terminal.
-<br />
+<!-- more -->
+<br /><br />
 Lets write the javascript first: <br />
 <ol>
 <li>Initialize all our variables
