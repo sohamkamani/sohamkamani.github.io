@@ -8,9 +8,9 @@ url: "http://sohamkamani.com" # the base hostname & protocol for your site
 twitter_username: sohamkamani
 github_username:  sohamkamani
 
-highlighter: pygments
+highlighter: rouge
 
 permalink: blog/:year/:month/:day/:title/
 
 # Build settings
-markdown: redcarpet
+markdown: kramdown

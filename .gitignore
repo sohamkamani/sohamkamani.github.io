@@ -2,3 +2,4 @@ _site
 .sass-cache
 .tmp
 tmp
+npm-debug.log
