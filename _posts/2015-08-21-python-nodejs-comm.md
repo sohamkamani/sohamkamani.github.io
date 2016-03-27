@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "How to communicate between Python and NodeJs"
+title:  "How to communicate between Python and NodeJs 🐍"
 date:   2015-08-21 18:45:12
 categories: jekyll update
 comments: true

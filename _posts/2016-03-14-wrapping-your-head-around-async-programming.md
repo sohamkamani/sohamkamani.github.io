@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "How is javascript asynchronous AND single threaded?"
+title:  "How is javascript asynchronous AND single threaded? 💫"
 date:   2016-03-14 18:45:12
 categories: asynchronous node js python
 comments: true
@@ -11,7 +11,7 @@ Asynchronous programming is one of those programming paradigms that's extremely 
 >Everything runs on a different thread *except* our code.
 
 At first glance, this sentence doesn't seem to make a lot of sense. Isn't everything we execute technically "our code"? Well, yes and no. Lets take a look at two examples of synchronous and asynchronous implementations of the same functionality.
-
+<!-- more -->
 Synchronous implementation (python) :
 
 ```python
@@ -77,4 +77,4 @@ The first thing that stands out in the javascript code snippet is that it's *muc
 
 For rapid prototypes, or in cases where speed and timing is not the main concern, going the synchronous way can be more productive. On the other hand, if you're planning to build an application with a lot of I/O and networking tasks, or with a lot of users, then the power of async really starts to shine.
 
-Although async is not embedded in pythons "philosophy", like it is with NodeJs, there are many libraries which let you leverage event driven and async programming, like the [Twisted](https://twistedmatrix.com/trac/) library. 
+Although async is not embedded in pythons "philosophy", like it is with NodeJs, there are many libraries which let you leverage event driven and async programming, like the [Twisted](https://twistedmatrix.com/trac/) library.

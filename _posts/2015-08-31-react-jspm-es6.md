@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Supercharge your ReactJs application with ES6 and jspm"
+title:  "Supercharge your ReactJs application with ES6 and jspm ⚡"
 date:   2015-08-31 18:45:12
 categories: reactjs jspm es6
 comments: true
