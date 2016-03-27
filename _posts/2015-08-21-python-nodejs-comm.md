@@ -51,7 +51,7 @@ In the end our javascript code would look like this:
 {% highlight javascript %}
 //start.js
 var spawn = require('child_process').spawn,
-    py    = spawn('python', ['read_input.py']),
+    py    = spawn('python', ['compute_input.py']),
     data = [1,2,3,4,5,6,7,8,9],
     dataString = '';
 
