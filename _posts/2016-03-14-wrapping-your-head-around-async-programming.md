@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "How is javascript asynchronous AND single threaded? 💫"
-date:   2016-03-14 18:45:12
+date:   2016-03-14 08:45:12
 categories: asynchronous node js python
 comments: true
 ---
