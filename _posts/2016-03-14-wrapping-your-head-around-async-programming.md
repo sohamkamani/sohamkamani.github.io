@@ -35,7 +35,7 @@ console.log('I come after the request');
 
 Now, all the above code runs on the same thread, no doubt about it. But what were missing is that the `request` and `requests` libraries, make http requests that go to other servers. The time spent in sending the request, processing it server side, and returning the response, is not spent in our thread. Thats what the web server you sent the request to does.  
 In our python implementation, we wait for all these processes to complete and receive the response before moving on to executing the next line of code. The async philosophy adopted by javascript and Node.js is fundamentally different in this regard. Instead of waiting for the response before executing the next bit of code, we declare what we *want* to happen once we receive our response, and move on to the next bit of code as usual.  
-This is why `"I come after the request"` will always get printed to the console after the response in the case of our python code, and *almost always* get printed before the response for our javascript code (I said almost always because we cant be sure of when the callback will get called).
+This is why `"I come after the request"` will always get printed to the console after the response in the case of our python code, and  always get printed before the response for our javascript code.
 
 >What good does any of this do me?
 
@@ -78,3 +78,7 @@ The first thing that stands out in the javascript code snippet is that it's *muc
 For rapid prototypes, or in cases where speed and timing is not the main concern, going the synchronous way can be more productive. On the other hand, if you're planning to build an application with a lot of I/O and networking tasks, or with a lot of users, then the power of async really starts to shine.
 
 Although async is not embedded in pythons "philosophy", like it is with NodeJs, there are many libraries which let you leverage event driven and async programming, like the [Twisted](https://twistedmatrix.com/trac/) library.
+
+---
+
+*Edit - Javascript always finishes the currently executing function first. Thanks @Twitchard for the correction.*
