@@ -45,6 +45,11 @@ img {
     vertical-align: middle;
 }
 
+video {
+  display: block;
+  margin: auto;
+  width : 75%
+}
 
 
 /**
@@ -147,7 +152,7 @@ pre {
         padding-right: 0;
         padding-left: 0;
     background-color: #272822;
-        
+
     }
 }
 
