@@ -9,7 +9,6 @@ comments: true
 GIFs have been around for as long as I can remember, and today they're as popular as ever. For an image format so popular, GIFs are horribly outdated and inefficient, and they should die. Hopefully by the end of this post I'll have convinced you to fight the plague that is the GIF image format.
 <video autoplay loop>
 <source src="/assets/images/posts/no-gifs/kill.webm" type="video/webm">
-  <source src="/assets/images/posts/no-gifs/kill.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
@@ -20,7 +19,7 @@ Already know why GIFs suck and want to know about a solution? [Go here](#solutio
 ## The origin and intent of the GIF
 Ironically, even though I am calling GIFs inefficient today, the reason they got so popular back in the day (1987) is _because_ they were efficient. GIFs used a form of image compression (called LZW compression) which allowed for even large images to be downloaded in a short time, with slow bandwidth. Later, basic animation was added to the specs, which allowed for multiple images to be painted one after the other with a certain time delay. margin: auto; Turns out, this compression technique, coupled with animation, and the addition of transparency made GIFs particularly useful for displaying logos and simple animated icons with ~10 frames of images, like the ones you see on the [official Space Jam website](http://www.warnerbros.com/archive/spacejam/movie/cmp/tunes/tunesframes.html).<br>**Don't get me wrong, GIFs were pretty amazing at the time for the use case they were designed for.**
 
-<video autoplay loop>   <source src="/assets/images/posts/no-gifs/awesome.webm" type="video/webm"><source src="/assets/images/posts/no-gifs/awesome.mp4" type="video/mp4">  Your browser does not support the video tag. </video><br>
+<video autoplay loop>   <source src="/assets/images/posts/no-gifs/awesome.webm" type="video/webm">  Your browser does not support the video tag. </video><br>
 
 ## GIFs today
 Let's see how the many features that made GIFs attractive, compare with their modern day counter parts :
@@ -36,7 +35,7 @@ In this PNG image, we can see that the edges of the dice are not sharp (they are
 The JPEG standard also has support for 16.9 million colors, albeit without transparency, since JPEG is meant to be used for photography, and not graphic design.
 
 #### Animation
-<video autoplay loop>   <source src="/assets/images/posts/no-gifs/please-no.webm" type="video/webm"><source src="/assets/images/posts/no-gifs/please-no.mp4" type="video/mp4">   Your browser does not support the video tag. </video><br>
+<video autoplay loop>   <source src="/assets/images/posts/no-gifs/please-no.webm" type="video/webm">  Your browser does not support the video tag. </video><br>
 Animation is undoubtedly the reason GIFs are so popular today, and the reason I refer to them as :
 
 ## The Plague
