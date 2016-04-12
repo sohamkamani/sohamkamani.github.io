@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Why we should stop using GIFs
+title: Why we should stop using GIFs 🏭
 date: 2016-04-09T08:45:12.000Z
 categories: gif web html
 comments: true
