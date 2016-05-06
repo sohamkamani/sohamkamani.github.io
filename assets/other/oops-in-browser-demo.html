@@ -1,0 +1,73 @@
+<html>
+
+<head>
+    <title>My first Three.js app</title>
+    <style>
+        .list-item {
+            font-size: 1.2em;
+            color: black;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: green;
+        }
+
+        .urgent {
+            font-weight: bold;
+            color: tomato;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="my-list">
+    </ul>
+    <script>
+        const ListItem = (text) => {
+            const domElement = document.createElement('li');
+            const textNode = document.createTextNode(text);
+            domElement.appendChild(textNode);
+            domElement.classList.add('list-item');
+            return {
+                domElement
+            };
+        };
+
+        const CompletedListItem = (text) => {
+            const superObject = ListItem(text);
+            const {
+                domElement
+            } = superObject;
+            domElement.classList.add('completed');
+            return superObject
+        };
+
+        const UrgentListItem = (text) => {
+            const superObject = ListItem(text);
+            const {
+                domElement
+            } = superObject;
+            domElement.classList.add('urgent');
+            return superObject;
+        };
+
+        const SuperUrgentListItem = (text) => {
+            const superObject = UrgentListItem(text);
+            const {
+                domElement
+            } = superObject;
+            const urgentTextNode = document.createTextNode('(urgent)');
+            domElement.appendChild(urgentTextNode);
+            return superObject;
+        };
+
+        const myList = document.getElementById('my-list');
+        myList.appendChild(ListItem('This is a regular list item').domElement);
+        myList.appendChild(CompletedListItem('This is a completed list item').domElement);
+        myList.appendChild(UrgentListItem('This is an urgent list item').domElement);
+        myList.appendChild(SuperUrgentListItem('This is a superObject urgent list item').domElement);
+    </script>
+</body>
+
+</html>
