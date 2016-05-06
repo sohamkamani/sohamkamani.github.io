@@ -8,7 +8,7 @@ comments: true
 
 It's perplexing that the javascript language has so many unique object oriented features, but that we don't use them nearly enough to unlock their full potential. In this post, we will go through how we can make use of inheritance and polymorphism to render browser DOM components. If you want an introduction or recap to object-oriented principles in javascript, be sure to check out my [other blog post](/blog/2016/04/30/oops-in-js/).
 <!-- more -->
-In todays world of limitless frameworks and libraries, it helps to get back to the roots and learn how to utilize the language's good parts to build scalable front end solutions, so there will be no jQusery, angular, or react used for this post, just plain old vanilla js.  
+In todays world of limitless frameworks and libraries, it helps to get back to the roots and learn how to utilize the language's good parts to build scalable front end solutions, so there will be no jQuery, angular, or react used for this post, just plain old vanilla js.  
 
 *Note - We will be using [ES6](http://es6-features.org/#Constants) throughout this post*
 
@@ -45,7 +45,7 @@ Pretty simple, we are making a constructor which will return an object containin
 
 ## The modified list items
 
-We will now create two different types of list items, which all inheirt their properties from the parent `ListItem`
+We will now create two different types of list items, which all inherit their properties from the parent `ListItem`
 
 ```js
 const CompletedListItem = (text) => {
@@ -97,7 +97,7 @@ myList.appendChild(UrgentListItem('This is an urgent list item').domElement);
 
 ## The advantage of using an object oriented approach
 
-The alternative to using this approach would be an if else branch in our base `ListItem` constructor, modifying the item based on a second `type` argument... sometinhg like this :
+The alternative to using this approach would be an if else branch in our base `ListItem` constructor, modifying the item based on a second `type` argument... something like this :
 
 ```js
 const ListItem = (text, type) => {
