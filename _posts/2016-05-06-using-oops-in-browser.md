@@ -135,4 +135,4 @@ If you try to do this using branches, you would end up (*gasp*) nesting your if-
 
 If you're using a module loader like [webpack](https://webpack.github.io/) or [browserify](http://browserify.org/), this pattern is especially useful because it allows you to isolate each DOM element as a separate module (A practice used in libraries like [react](https://github.com/facebook/react)).
 
-You can find the working demo of this whole example [here](/assets/other/oops-in-browser-demo.html) and the full source code [here](https://github.com/sohamkamani/sohamkamani.github.io/blob/master/assets/other/oops-in-browser-demo.html).
+You can find the working demo of this whole example [here](/assets/other/oops-in-the-browser-demo-transpiled.html) and the full source code [here](https://github.com/sohamkamani/sohamkamani.github.io/blob/master/assets/other/oops-in-browser-demo.html).
