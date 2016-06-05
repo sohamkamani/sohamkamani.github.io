@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  A simplified approach to calling APIs with redux ⏬
-date:   2016-05-06T08:45:12.000Z
+date:   2016-06-05T08:45:12.000Z
 categories: react redux apis
 comments: true
 ---
