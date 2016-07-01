@@ -10,6 +10,7 @@ comments: true
 
 Replication is a technique used my MongoDB to ensure that your data is always backed up for safe keeping, in case one of your database servers decide to crash, shut down or turn into Ultron. Even though replication as a concept sounds easy, it's quite daunting for newcomers to set up their own replica sets, much less containerize them.  
 This tutorial is a beginner friendly way to set up your own MongoDB replica sets using docker.
+<!-- more -->
 
 ## Pre-requisites
 
