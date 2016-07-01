@@ -6,6 +6,8 @@ categories: snapchat tech
 comments: true
 ---
 
+![architecture diagram](/assets/images/posts/docker-mongo-replication/center-image.png)
+
 Replication is a technique used my MongoDB to ensure that your data is always backed up for safe keeping, in case one of your database servers decide to crash, shut down or turn into Ultron. Even though replication as a concept sounds easy, it's quite daunting for newcomers to set up their own replica sets, much less containerize them.  
 This tutorial is a beginner friendly way to set up your own MongoDB replica sets using docker.
 
@@ -41,7 +43,7 @@ These will be the three mongo instances of our replica set. We are also going to
 
 ![architecture diagram](/assets/images/posts/docker-mongo-replication/architecture-diagram.png)
 
-## Setting up the network and containers
+## Setting up the network
 
 To see all networks currently on your system, run the command
 
@@ -69,3 +71,130 @@ NETWORK ID          NAME                DRIVER              SCOPE
 f65e93c94e42        mongo-cluster       bridge              local
 8062e4e7cdca        none                null                local
 ```
+
+## Setting up our containers
+
+To start up our first container, `mongo1` run the command:
+
+```sh
+$ docker run \
+-p 30001:27017 \
+--name mongo1 \
+--net my-mongo-cluster \
+mongo mongod --replSet my-mongo-set
+```
+
+Let's see what each part of this command does :
+
+- `docker run` : Start a container from an image
+- `-p 30001:27017` : Expose port 27017 in our container, as port 30001 on the localhost
+- `--name mongo1` : name this container "mongo1"
+- `--net my-mongo-cluster` : Add this container to the "my-mongo-cluster" network.
+- `mongo` : the name of the image we are using to spawn this container
+- `mongod --replSet my-mongo-set` : Run mongod while adding this mongod instance to the replica set named "my-mongo-set"
+
+Set up the other 2 containers by running :
+
+```sh
+$ docker run \
+-p 30002:27017 \
+--name mongo2 \
+--net my-mongo-cluster \
+mongo mongod --replSet my-mongo-set
+$ docker run \
+-p 30003:27017 \
+--name mongo3 \
+--net my-mongo-cluster \
+mongo mongod --replSet my-mongo-set
+```
+
+>Remember to run each of these commands in a separate terminal window, since we are not running these containers in a detached state
+
+## Setting up replication
+
+Now that we have all our mongo instances up and running, let's turn them into a replica set.
+
+Connect to the mongo shell in any of the containers.
+
+```sh
+docker exec -it mongo1 mongo
+```
+
+This command will open up the mongo shell in our running mongo1 container (but you can also run it from the mongo2 or mongo3 container as well).
+
+Inside the mongo shell, we first create our configuration :
+
+```js
+MongoDB shell version: 2.6.7
+> db = (new Mongo('localhost:27017')).getDB('test')
+test
+> config = {
+  	"_id" : "my-mongo-set",
+  	"members" : [
+  		{
+  			"_id" : 0,
+  			"host" : "mongo1:27017"
+  		},
+  		{
+  			"_id" : 1,
+  			"host" : "mongo2:27017"
+  		},
+  		{
+  			"_id" : 2,
+  			"host" : "mongo3:27017"
+  		}
+  	]
+  }
+```
+
+The first `_id` key in the config, should be the same as the `--replSet` flag which was set for our mongod instances, which is `my-mongo-set` in our case. We then list all the members we want in our replica set. Since we added all our mongo instances to our docker network. Their name in each container resolver to their respective ip addresses in the `my-mongo-cluster` network.
+
+We finally start the replica set by running
+
+```js
+> rs.initiate(config)
+{ "ok" : 1 }
+```
+
+,in our mongo shell. If all goes well, your prompt should change to something like this :
+
+```
+my-mongo-set:PRIMARY>
+```
+
+This means that the shell is currently associated with the `PRIMARY` database in our `my-mongo-set` cluster.
+
+Let's play around with our new replica set to make sure it works as intended.
+*(I am omitting the `my-mongo-set:PRIMARY>` prompt for readability)*
+
+We first insert a document into our primary database :
+
+```js
+> db.mycollection.insert({name : 'sample'})
+WriteResult({ "nInserted" : 1 })
+> db.mycollection.find()
+{ "_id" : ObjectId("57761827767433de37ff95ee"), "name" : "sample" }
+```
+
+We then make a new connection to one of our secondary databases (located on mongo2) and test to see if our document get replicated there as well :
+
+```js
+> db2 = (new Mongo('mongo2:27017')).getDB('test')
+test
+> db2.setSlaveOk()
+> db2.mycollection.find()
+{ "_id" : ObjectId("57761827767433de37ff95ee"), "name" : "sample" }
+```
+
+We run the `db2.setSlaveOk()` command to let the shell know that we re intentionally querying a database that is not our primary.
+And it looks like the same document is present in our secondary as well.
+
+## Going forward
+
+As you can see, with the power of docker we were able to get a mongo replica set up and running in ~5 minutes. Although this set up is great to experiment and play around with replica sets, there are some precautions to be taken before moving it to production :
+
+- None of the databases have any administrative security measures. Be sure to add users and passwords when deploying this solution on an actual server.
+- Keeping all containers on a single server is not the best idea. Run at least one container on a different server and access it through its external ip address and port (in our case the external facing ports for out containers were 30001, 30002, and 30003 for mongo1, mongo2, and mongo3 respectively).
+- In case we remove one of our containers by mistake, the data would also vanish. Using [Docker volumes](https://docs.docker.com/v1.10/engine/userguide/containers/dockervolumes/) and setting the appropriate `--dbpath` when running `mongod` would prevent this from happening.
+
+Finally, instead of running a bunch of shell scripts, you may find it more convenient to automate this whole process by using multi-container automation tools like [docker-compose](https://docs.docker.com/compose/).
