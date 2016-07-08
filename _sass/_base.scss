@@ -1,43 +1,69 @@
 /**
  * Reset some basic elements
  */
-body, h1, h2, h3, h4, h5, h6,
-p, blockquote, pre, hr,
-dl, dd, ol, ul, figure {
+blockquote,
+body,
+dd,
+dl,
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+ol,
+p,
+pre,
+ul {
     margin: 0;
     padding: 0;
     tab-size: 2;
 }
-
-
-
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: $title-font-family;
+}
 /**
  * Basic styling
  */
 body {
     font-family: $base-font-family;
-    font-size: $base-font-size;
+    // font-size: $base-font-size;
     line-height: $base-line-height;
     font-weight: 300;
+    font-style: normal;
+    font-size: 19px;
+    line-height: 1.64;
+    letter-spacing: -.003em;
     color: $text-color;
     background-color: $background-color;
     -webkit-text-size-adjust: 100%;
 }
-
-
-
 /**
  * Set `margin-bottom` to maintain vertical rhythm
  */
-h1, h2, h3, h4, h5, h6,
-p, blockquote, pre,
-ul, ol, dl, figure,
-%vertical-rhythm {
+%vertical-rhythm,
+blockquote,
+dl,
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ol,
+p,
+pre,
+ul {
     margin-bottom: $spacing-unit / 2;
 }
-
-
-
 /**
  * Images
  */
@@ -47,71 +73,58 @@ img {
     display: block;
     margin: 0 auto;
 }
-
 video {
-  display: block;
-  margin: auto;
-  width : 75%
+    display: block;
+    margin: auto;
+    width: 75%;
 }
-
-
 /**
  * Figures
  */
 figure > img {
     display: block;
 }
-
 figcaption {
     font-size: $small-font-size;
 }
-
-
-
 /**
  * Lists
  */
-ul, ol {
+ol,
+ul {
     margin-left: $spacing-unit;
 }
-
 li {
-    > ul,
-    > ol {
-         margin-bottom: 0;
+     > ol,
+    > ul {
+        margin-bottom: 0;
     }
 }
-
-
-
 /**
  * Headings
  */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-weight: 300;
 }
-
-
-
 /**
  * Links
  */
 a {
     color: $brand-color;
     text-decoration: none;
-
     &:visited {
         color: darken($brand-color, 15%);
     }
-
     &:hover {
         color: $text-color;
         text-decoration: underline;
     }
 }
-
-
-
 /**
  * Blockquotes
  */
@@ -122,92 +135,71 @@ blockquote {
     font-size: 18px;
     letter-spacing: -1px;
     font-style: italic;
-
     > :last-child {
         margin-bottom: 0;
     }
 }
-
-
-
 /**
  * Code formatting
  */
-pre,
-code {
+code,
+pre {
     font-size: 15px;
     border: 1px solid $grey-color-light;
     border-radius: 3px;
 }
-
 code {
     padding: 1px 5px;
     background-color: #eef;
 }
-
 pre {
     padding: 8px 12px;
     overflow-x: scroll;
     background-color: #272822;
-
     > code {
         border: 0;
         padding-right: 0;
         padding-left: 0;
-    background-color: #272822;
-
+        background-color: #272822;
     }
 }
-
-
-
 /**
  * Wrapper
  */
 .wrapper {
     max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit} * 2));
-    max-width:         calc(#{$content-width} - (#{$spacing-unit} * 2));
+    max-width: calc(#{$content-width} - (#{$spacing-unit} * 2));
     margin-right: auto;
     margin-left: auto;
     padding-right: $spacing-unit;
     padding-left: $spacing-unit;
     @extend %clearfix;
-
     @include media-query($on-laptop) {
         max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit}));
-        max-width:         calc(#{$content-width} - (#{$spacing-unit}));
+        max-width: calc(#{$content-width} - (#{$spacing-unit}));
         padding-right: $spacing-unit / 2;
         padding-left: $spacing-unit / 2;
     }
 }
-
-
-
 /**
  * Clearfix
  */
 %clearfix {
-
     &:after {
         content: "";
         display: table;
         clear: both;
     }
 }
-
-
-
 /**
  * Icons
  */
 .icon {
-
     > svg {
         display: inline-block;
         width: 16px;
         height: 16px;
         vertical-align: middle;
-
         path {
             fill: $grey-color;
         }
