@@ -35,6 +35,17 @@ select users.firstname || ' ' || users.lastname as user,
 order by cost desc;
 ```
 
-Yikes! This would scare any new comer, or even an intermediate developer looking at SQl for the first time. It shouldn't have to be like this.
+Yikes! This would scare any new comer, or even an intermediate developer looking at SQL for the first time. It shouldn't have to be like this.
 
-It's always easy to remember something which is intuitive, and through this guide, I hope to ease the barrier of entry for SQL newbies, and even for people who have worked with SQL, but want a fresh perspective.
+It's always easy to remember something which is intuitive, and through this guide, I hope to ease the barrier of entry for SQL newbies, and even for people who have worked with SQL, but want a fresh perspective.  
+
+_All queries used in this post are made for PostgreSQL, although SQL syntax is very similar across databases, so some of these would  work on MySQL as well_
+
+## The three magic words
+
+### The three magic words
+
+#### The three magic words
+
+
+Although there are lots of keywords used in

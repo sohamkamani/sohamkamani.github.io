@@ -294,20 +294,20 @@ pre {
 .post-content {
   margin-bottom: 30px; }
   .post-content h2 {
-    font-size: 32px; }
+    font-size: 34px; }
     @media screen and (max-width: 800px) {
       .post-content h2 {
-        font-size: 28px; } }
+        font-size: 30px; } }
   .post-content h3 {
-    font-size: 26px; }
+    font-size: 28px; }
     @media screen and (max-width: 800px) {
       .post-content h3 {
-        font-size: 22px; } }
+        font-size: 24px; } }
   .post-content h4 {
-    font-size: 20px; }
+    font-size: 22px; }
     @media screen and (max-width: 800px) {
       .post-content h4 {
-        font-size: 18px; } }
+        font-size: 20px; } }
 
 /**
  * Syntax highlighting styles
