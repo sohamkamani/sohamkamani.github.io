@@ -34,11 +34,35 @@ It's always easy to remember something which is intuitive, and through this guid
 
 _All queries used in this post are made for PostgreSQL, although SQL syntax is very similar across databases, so some of these would work on MySQL, or other SQL databases as well_
 
-## The three magic words
+## Contents
+
+1. [The three magic words](#c-1)
+2. [Our database](#c-2)
+3. [Simple Query](#c-3)
+    1. [FROM - Where do we get the data from?](#c-3-1)
+    2. [WHERE - What data should we show?](#c-3-2)
+    3. [SELECT - How should we show it?](#c-3-3)
+4. [Joins](#c-4)
+5. [Aggregations](#c-5)
+6. [Subqueries](#c-6)
+    1. [Two-dimensional table](#c-6-1)
+    1. [One-dimensional array](#c-6-2)
+    1. [Single Values](#c-6-3)
+7. [Write Operations](#c-7)
+    1. [Update](#c-7-1)
+    2. [Delete](#c-7-2)
+    3. [Insert](#c-7-3)
+8. [Feedback](#c-8)
+
+<span id="c-1"></span>
+
+## 1. The three magic words
 
 Although there are lots of keywords used in SQL, `SELECT`, `FROM`, and `WHERE` are the ones you would be using in almost every query that you make. After reading ahead, you would realize that these key words represent the most fundamental aspect of querying a database, and other, more complex queries are simply extensions of them.
 
-## Our database
+<span id="c-2"></span>
+
+## 2. Our database
 
 Let's take a look at the sample data we will be using throughout the rest of this article:
 
@@ -51,7 +75,9 @@ We have a library, with books and members. We also have another table for borrow
 -   Our "members" table only has the first and last name of all registered members.
 -   The "borrowings" table has information on the books borrowed by the members. The `bookid` column refers to the id of the book in the "books" table that was borrowed, and the `memberid` column corresponds to the member in the "members" table that borrowed the book. We also have the dates when the books were borrowed, and when they are expected to be returned.
 
-## Simple Query
+<span id="c-3"></span>
+
+## 3. Simple Query
 
 Let's get started with our first query : We want the _names_ and _ids_ of all books written by "Dan Brown".
 
@@ -72,15 +98,21 @@ Which would give us :
 
 Simple enough. However, lets try to dissect the query to really understand whats happening.
 
-### FROM - Where do we get the data from?
+<span id="c-3-1"></span>
+
+### 3.1 FROM - Where do we get the data from?
 
 This might seem obvious now, but actually matters a lot when we get to joins and subqueries. `FROM` is there to point our query to its table, the place where it has to look for the data. This table can simply be one that already exists (like the previous example), or a table which we generate through joins or subqueries.
 
-### WHERE - What data should we show?
+<span id="c-3-2"></span>
+
+### 3.2 WHERE - What data should we show?
 
 `WHERE`, quite simply acts to filter out the **rows** that we want to show. In our case the only rows we want to consider are those where the value of the `author` column is "Dan Brown"
 
-### SELECT - How should we show it?
+<span id="c-3-3"></span>
+
+### 3.3 SELECT - How should we show it?
 
 Now that we got all the rows we wanted from the table that we wanted, the question that arises is what exactly do we want to show out of the data that we got? In our case we only need the name and id of the book, so that's what we `SELECT`. We can also rename the columns we want to show with `AS`.
 
@@ -88,7 +120,9 @@ In the end, you can represent the entire query as a simple diagram :
 
 ![](/assets/images/posts/sql-beginners/diagram1.svg)
 
-## Joins
+<span id="c-4"></span>
+
+## 4. Joins
 
 We would now like to see the names of all books (not unique) written by "Dan Brown" that were borrowed, along with the date of return :
 
@@ -173,7 +207,9 @@ Which gives us :
 
 Awesome! Although, the names are repeating (non-unique). We'll get to solving that in a bit...
 
-## Aggregations
+<span id="c-5"></span>
+
+## 5. Aggregations
 
 In a nutshell, _aggregations are used to convert many rows into a single row_. the only thing that changes is the logic used on each column for its aggregation.
 
@@ -229,7 +265,9 @@ And get the result :
 
 Here the `sum` function, only works on the `stock` column, summing all values for each group.
 
-## Subqueries
+<span id="c-6"></span>
+
+## 6. Subqueries
 
 <img src="/assets/images/posts/sql-beginners/meme1.jpg" style="width:60%;"/>
 
@@ -237,7 +275,9 @@ Sub queries are regular SQL queries, that are embedded inside larger queries.
 
 There are 3 different types of subqueries, based on what they return -
 
-### 1. Two-dimensional table
+<span id="c-6-1"></span>
+
+### 6.1 Two-dimensional table
 
 These are queries that return more than one column. A good example is the query we performed in the previous aggregation excercise. As a subquery, these simply return another table which can be queried further. From the previous excercise, if we only want the stock of books written by "Robin Sharma", one way of getting that result would be to use sub-queries :
 
@@ -257,7 +297,9 @@ Result :
 
 <br>
 
-### 2. One-dimensional array
+<span id="c-6-2"></span>
+
+### 6.2 One-dimensional array
 
 Queries which return multiple rows of a single column, can be used as arrays, in addition to being used as Two-dimensional tables.
 
@@ -313,7 +355,9 @@ We can break this down into 2 steps -
     WHERE author IN ('Robin Sharma', 'Dan Brown');
     ```
 
-### 3. Single Values
+<span id="c-6-3"></span>
+
+### 6.3 Single Values
 
 These are queries whose results have only one row and one column. These can be treated as a constant value, and can be used anywhere a value is used, like for comparison operators. They can also be used like two dimensional tables, as well as an array containing 1 element.
 
@@ -356,11 +400,15 @@ And which gives us :
 | ------ | -------------------------- | ------------ | ------------------- | ----- |
 | 3      | Who Will Cry When You Die? | Robin Sharma | 2006-06-15 00:00:00 | 4     |
 
-## Write Operations
+<span id="c-7"></span>
+
+## 7. Write Operations
 
 Most of the write operations in a database are pretty straightforward, as compared to the more complex read queries.
 
-### Update
+<span id="c-7-1"></span>
+
+### 7.1 Update
 
 The syntax of `UPDATE` queries are semantically similar to read queries. The only difference however, is that instead of `SELECT`ing columns from a bunch of rows, we `SET` those columns instead.
 
@@ -376,7 +424,9 @@ WHERE author='Dan Brown';
 
 ![](/assets/images/posts/sql-beginners/diagram3.svg)
 
-### Delete
+<span id="c-7-2"></span>
+
+### 7.2 Delete
 
 A `DELETE` query is simply a `SELECT`, or an `UPDATE` query without the column names. Seriously. As in `SELECT` and `UPDATE`, the `WHERE` clause remains as it is, selecting rows to be deleted. Since a delete operation removes an entire row, there is no such thing as specifying column names to delete. Hence is instead of updating the stock to 0, if we just deleted the entries from Dan Brown all together, we would write :
 
@@ -385,7 +435,9 @@ DELETE FROM books
 WHERE author='Dan Brown';
 ```
 
-### Insert
+<span id="c-7-3"></span>
+
+### 7.3 Insert
 
 Possibly the only outlier from the other query types is the `INSERT` query. Its format is :
 
@@ -411,7 +463,9 @@ VALUES
   (5,'The Fault in our Stars','John Green','01-03-2015',3);
 ```
 
-## Feedback
+<span id="c-8"></span>
+
+## 8. Feedback
 
 Now that we have come to the end of the guide, it's time for a small test. Take a look at the first query at the very beginning of this post. Can you try to figure out what it does? Try breaking it down into its `SELECT`, `FROM`, `WHERE`, `GROUP BY`, and subquery components.  
 
