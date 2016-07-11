@@ -246,8 +246,76 @@ Sub queries are regular SQL queries, that are embedded inside larger queries.
 
 There are 3 different types of subqueries, based on what they return -
 
-1. __2-dimensional table__ - These are queries that return more than one column. A good example is the query we performed in the previous aggregation excercise. As a subquery, these simply return another table which can be queried further. From the previous excercise, if we only want
+### 1. Two-dimensional table
+
+These are queries that return more than one column. A good example is the query we performed in the previous aggregation excercise. As a subquery, these simply return another table which can be queried further. From the previous excercise, if we only want the stock of books written by "Robin Sharma", one way of getting that result would be to use sub-queries :
+
+```sql
+SELECT *
+FROM (SELECT author, sum(stock)
+  FROM books
+  GROUP BY author) AS results
+WHERE author='Robin Sharma';
+```
+
+Result :
+
+| author       | sum |
+| ------------ | --- |
+| Robin Sharma | 4   |
+
+<br>
+
+### 2. One-dimensional array
+
+Queries which return multiple rows of a single column, can be used as arrays, in addition to being used as Two-dimensional tables.
+
+For example, lets say we want to get the titles and ids of all books written by an author, whose total stock of books is greater than 3.  
+We can break this down into 2 steps -
+
+1.  Get the list of authors with total stock of books greater than 3. Building on top of our previous example, we can write :
+
+    ```sql
+    SELECT author
+    FROM (SELECT author, sum(stock)
+      FROM books
+      GROUP BY author) AS results
+    WHERE sum > 3;
+    ```
+
+    Which gives us :
+
+    <table>
+    <tr>
+    <th>author</th></tr>
+    <tr><td>Robin Sharma</td></tr>
+    <tr><td>Dan Brown</td></tr>
+    </table>
+
+    Which can also be written as : `['Robin Sharma', 'Dan Brown']`
+
+2.  We then use this result in our next query :
+
+    ```sql
+    SELECT title, bookid
+    FROM books
+    WHERE author IN (SELECT author
+      FROM (SELECT author, sum(stock)
+      FROM books
+      GROUP BY author) AS results
+      WHERE sum > 3);
+    ```
+
+    Which gives us :
+
+    | title                      | bookid |
+    | -------------------------- | ------ |
+    | The Lost Symbol            | 2      |
+    | Who Will Cry When You Die? | 3      |
+    | Inferno                    | 4      |
 
 ## Write Operations
+
+
 
 c
