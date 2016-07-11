@@ -12,27 +12,18 @@ If you're anything like me, SQL is one of those things that may look easy at fir
 Then, you get to joins, aggregation, and subqueries and everything you read just seems like gibberish. Something like this :
 
 ```sql
-select users.firstname || ' ' || users.lastname as user,
-    website.name as sitename,
-    case
-        when users.userid = 0 then
-            courses.slots*website.guestcost
-        else
-            courses.slots*website.membercost
-    end as cost
-        from
-                public.members users                
-                inner join public.coursebookings courses
-                        on users.userid = courses.userid
-                inner join public.facilities website
-                        on courses.facid = website.facid
-        where
-        courses.starttime >= '2014-09-14' and
-        courses.starttime < '2014-09-15' and (
-            (users.userid = 0 and courses.slots*website.guestcost > 30) or
-            (users.userid != 0 and courses.slots*website.membercost > 30)
-        )
-order by cost desc;
+SELECT members.firstname || ' ' || members.lastname
+AS "Full Name"
+FROM borrowings
+INNER JOIN members
+ON members.memberid=borrowings.memberid
+INNER JOIN books
+ON books.bookid=borrowings.bookid
+WHERE borrowings.bookid IN (SELECT bookid
+  FROM books
+  WHERE stock>(SELECT avg(stock)
+    FROM books))
+GROUP BY members.firstname, members.lastname;
 ```
 
 Yikes! This would scare any new comer, or even an intermediate developer looking at SQL for the first time. It shouldn't have to be like this.
@@ -314,8 +305,140 @@ We can break this down into 2 steps -
     | Who Will Cry When You Die? | 3      |
     | Inferno                    | 4      |
 
+    This is equivalent to writing :
+
+    ```sql
+    SELECT title, bookid
+    FROM books
+    WHERE author IN ('Robin Sharma', 'Dan Brown');
+    ```
+
+### 3. Single Values
+
+These are queries whose results have only one row and one column. These can be treated as a constant value, and can be used anywhere a value is used, like for comparison operators. They can also be used like two dimensional tables, as well as an array containing 1 element.
+
+As an example, let's find out information about all books having stock above the average stock of books present.
+
+The average stock can be queried using :
+
+```sql
+select avg(stock) from books;
+```
+
+Which gives us :
+
+<table>
+<tr><th>avg</th></tr>
+<tr><td>3.000</td></tr>
+</table>
+
+Which can also be used as the scalar value `3`.
+
+So now, we can finally write our query :
+
+```sql
+SELECT *
+FROM books
+WHERE stock>(SELECT avg(stock) FROM books);
+```
+
+Which is equivalent to writing :
+
+```sql
+SELECT *
+FROM books
+WHERE stock>3.000
+```
+
+And which gives us :
+
+| bookid | title                      | author       | published           | stock |
+| ------ | -------------------------- | ------------ | ------------------- | ----- |
+| 3      | Who Will Cry When You Die? | Robin Sharma | 2006-06-15 00:00:00 | 4     |
+
 ## Write Operations
 
+Most of the write operations in a database are pretty straightforward, as compared to the more complex read queries.
 
+### Update
 
-c
+The syntax of `UPDATE` queries are semantically similar to read queries. The only difference however, is that instead of `SELECT`ing columns from a bunch of rows, we `SET` those columns instead.
+
+If we suddenly lost all of our books written by "Dan Brown", we would like to update the stock to make it 0. For this we would write :
+
+```sql
+UPDATE books
+SET stock=0
+WHERE author='Dan Brown';
+```
+
+`WHERE` still performs the same function here, which is that of choosing rows. Instead of `SELECT` which we used in our read queries, we now use `SET`. However, now, in addition to mentioning the column names, you also have to mention the new value of the columns in the selected rows as well.
+
+![](/assets/images/posts/sql-beginners/diagram3.svg)
+
+### Delete
+
+A `DELETE` query is simply a `SELECT`, or an `UPDATE` query without the column names. Seriously. As in `SELECT` and `UPDATE`, the `WHERE` clause remains as it is, selecting rows to be deleted. Since a delete operation removes an entire row, there is no such thing as specifying column names to delete. Hence is instead of updating the stock to 0, if we just deleted the entries from Dan Brown all together, we would write :
+
+```sql
+DELETE FROM books
+WHERE author='Dan Brown';
+```
+
+### Insert
+
+Possibly the only outlier from the other query types is the `INSERT` query. Its format is :
+
+```sql
+INSERT INTO x
+  (a,b,c)
+VALUES
+  (x, y, z);
+```
+
+Where `a`, `b`, `c` are the column names and `x`, `y`, and `z` are the values to be inserted into those columns, in the same order in which they are specified. That's pretty much all there is to it.
+
+For a more concrete example, here is the `INSERT` query to input the entire data of the "books" table :
+
+```sql
+INSERT INTO books
+  (bookid,title,author,published,stock)
+VALUES
+  (1,'Scion of Ikshvaku','Amish Tripathi','06-22-2015',2),
+  (2,'The Lost Symbol','Dan Brown','07-22-2010',3),
+  (3,'Who Will Cry When You Die?','Robin Sharma','06-15-2006',4),
+  (4,'Inferno','Dan Brown','05-05-2014',3),
+  (5,'The Fault in our Stars','John Green','01-03-2015',3);
+```
+
+## Feedback
+
+Now that we have come to the end of the guide, it's time for a small test. Take a look at the first query at the very beginning of this post. Can you try to figure out what it does? Try breaking it down into its `SELECT`, `FROM`, `WHERE`, `GROUP BY`, and subquery components.  
+
+Here it is written in a more readable way :
+
+```sql
+SELECT members.firstname || ' ' || members.lastname AS "Full Name"
+
+FROM borrowings
+INNER JOIN members
+ON members.memberid=borrowings.memberid
+INNER JOIN books
+ON books.bookid=borrowings.bookid
+
+WHERE borrowings.bookid IN (SELECT bookid FROM books WHERE stock>  (SELECT avg(stock) FROM books)  )
+
+GROUP BY members.firstname, members.lastname;
+```
+
+It's actually the list of all members who borrowed any book with a total stock that was above average.
+
+Result :
+
+<table>
+<tr><th>Full Name</th></tr>
+<tr><td>Lida Tyler</td></tr>
+</table>
+
+<br>
+Hopefully you were able to get the answer no sweat, but if not, I would love your feedback or comments on how I could make this post better. Cheers!
