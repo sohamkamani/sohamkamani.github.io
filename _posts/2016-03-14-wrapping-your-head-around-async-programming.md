@@ -73,7 +73,7 @@ Synchronous execution with a smaller waiting time doesn't look much different fr
 
 >If async is so obviously the correct thing to do, then why should we bother with synchronous programming?
 
-The first thing that stands out in the javascript code snippet is that it's *much less simple* than the corresponding python snippet, and so takes a bit more time to read, understand, and develop. In fact, there are many articles and [blog posts](/blog/2015/08/22/understand_node_without_losing_your_mind/) dedicated to managing async code, because without proper management, it can all get out of hand pretty quickly.
+The first thing that stands out in the javascript code snippet is that it's *much less simple* than the corresponding python snippet, and so takes a bit more time to read, understand, and develop. In fact, there are many articles and [blog posts](/blog/2015/08/21/understand_node_without_losing_your_mind/) dedicated to managing async code, because without proper management, it can all get out of hand pretty quickly.
 
 For rapid prototypes, or in cases where speed and timing is not the main concern, going the synchronous way can be more productive. On the other hand, if you're planning to build an application with a lot of I/O and networking tasks, or with a lot of users, then the power of async really starts to shine.
 
