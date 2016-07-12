@@ -141,7 +141,7 @@ Which would give us :
 | The Lost Symbol | 2016-04-19 00:00:00 |
 
 <br>
-Most of the query looks similar to our previous example _except_ for the `FROM` section. What this means is that _the table we are querying from ha changed_. We are neither querying the "books" table nor the "borrowings" table. Instead, we are querying a _new table_ formed by joining these two tables.
+Most of the query looks similar to our previous example _except_ for the `FROM` section. What this means is that _the table we are querying from has changed_. We are neither querying the "books" table nor the "borrowings" table. Instead, we are querying a _new table_ formed by joining these two tables.
 
 `borrowings JOIN books ON borrowings.bookid=books.bookid` can be considered as another table formed by combining all entries from the books table and the borrowings table, as long as these entries have the same `bookid` in each table. The resultant table would be :
 
