@@ -1,6 +1,6 @@
 ---
 layout: post
-title: A beginners guide to thinking in SQL 🐘
+title: A beginners guide to SQL 🐘
 date: 2016-07-07T00:45:12.000Z
 categories: sql beginners guide tutorial
 comments: true
@@ -15,9 +15,9 @@ Then, you get to joins, aggregation, and subqueries and everything you read just
 SELECT members.firstname || ' ' || members.lastname
 AS "Full Name"
 FROM borrowings
-INNER JOIN members
+JOIN members
 ON members.memberid=borrowings.memberid
-INNER JOIN books
+JOIN books
 ON books.bookid=borrowings.bookid
 WHERE borrowings.bookid IN (SELECT bookid
   FROM books
@@ -475,9 +475,9 @@ Here it is written in a more readable way :
 SELECT members.firstname || ' ' || members.lastname AS "Full Name"
 
 FROM borrowings
-INNER JOIN members
+JOIN members
 ON members.memberid=borrowings.memberid
-INNER JOIN books
+JOIN books
 ON books.bookid=borrowings.bookid
 
 WHERE borrowings.bookid IN (SELECT bookid FROM books WHERE stock>  (SELECT avg(stock) FROM books)  )
@@ -496,3 +496,8 @@ Result :
 
 <br>
 Hopefully you were able to get the answer no sweat, but if not, I would love your feedback or comments on how I could make this post better. Cheers!
+
+-----
+
+<span class="footnotes">_Edit - Changed `INNER JOIN` to `JOIN`, on suggestions of many in the comments, and also because it's simpler to understand._</span><br>
+<span class="footnotes">_Edit - Changed title from "A beginners guide to thinking in SQL 🐘" to "A beginners guide to SQL 🐘"_</span>

@@ -80,5 +80,6 @@ For rapid prototypes, or in cases where speed and timing is not the main concern
 Although async is not embedded in pythons "philosophy", like it is with NodeJs, there are many libraries which let you leverage event driven and async programming, like the [Twisted](https://twistedmatrix.com/trac/) library.
 
 ---
-<span id="footnotes"></span>
+<span id="footnotes" class="footnotes">
 *[1] Edit - Javascript always finishes the currently executing function first. Thanks @Twitchard for the correction.*
+</span>
