@@ -3,3 +3,4 @@ _site
 .tmp
 tmp
 npm-debug.log
+Gemfile.lock
