@@ -37,6 +37,8 @@ If you observe closely, a common theme in all these reasons is the assumption th
 
 I have written this post to debunk that myth, and prove that testing actually saves a lot of your time, along with providing several other benefits.
 
+<!-- more -->
+
 ## Tests are a one time investment in your code
 
 Sure,tests can take some time to write initially, but they keep giving back returns over time. This is why I often refer to them as an investment. And what you are getting returns on is your time.
