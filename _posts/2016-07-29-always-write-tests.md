@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Why you should always write tests for your code"
+title: "Why you should always write tests for your code 🚂"
 date: 2016-07-29T00:45:12.000Z
 categories: testing tdd javascript
 comments: true
