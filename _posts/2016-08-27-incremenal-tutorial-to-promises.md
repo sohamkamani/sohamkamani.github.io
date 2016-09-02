@@ -152,7 +152,7 @@ Understanding why promises chain is the key to understanding promises themselves
 
 ## 5. What does a promise return?
 
-One thing to remember is that a promise doesn't return anything useful. If were talking about the useful data we get at the end of a promise, that's what the promise _resolves_ to.
+One thing to remember is that a promise itself doesn't return anything useful. If were talking about the useful data we get at the end of a promise, that's what the promise _resolves_ to.
 
 >💡 We always say that promises resolves to a value. This is the future value that they represent.
 
@@ -220,3 +220,85 @@ containerPromise.then(newValue => {
 `aNewPromise` resolves to "foo", which is the value returned by the callback of `originalPromise`'s `then` method.(point 1)  
 
 `containerPromise` also resolves to "foo", but in this case `containerPromise` actually resolves to `aNewPromise`, which resolves to "foo". (point 2)
+
+
+## 6. How do I create my own promise?
+
+Until now, all the examples we have seen so far were of promises that were created using some external library. In this section, we are going to see how to make our own promises.  
+
+For this example, we will make use of the most common async function in javascript : `setTimeout`, to create a promise. For this example, we want to resolve to the value "42", after 1 second. Here's how we would do that :
+
+```js
+const theAnswerToEverything = new Promise(resolve => {
+  setTimeout(()=>{
+    resolve(42)
+  }, 1000)
+})
+```
+
+Now, `theAnswerToEverything` is a promise that can be called like :
+
+```js
+theAnswerToEverything
+  .then(answer => console.log(answer))
+  //Prints 42
+```
+
+The general format for creating a promise is :
+
+```js
+const foo = new Promise((resolve, reject)=> {
+  /*
+  Do something asynchronous
+  */
+})
+```
+
+`resolve`, and `reject` are both functions.
+
+The second argument, `reject`, is used for error handling. If the async operation you are attempting has a chance to fail, the `reject` function should be called with the error object thrown.
+
+>But what if I just want to make a promise that just returns a plain old value?
+
+It is sometimes required to just have a promise that resolves to a value immediately. Let's say we want to skip the timeout of 1 second and just have `theAnswerToEverything` resolve to 42 immediately. We can write something like this :
+
+```js
+const theAnswerToEverything = new Promise(resolve => {
+  resolve(42)
+})
+```
+
+...or, to make it even simpler, we can use the `Promise.resolve` shorthand :
+
+```js
+const theAnswerToEverything = Promise.resolve(42)
+```
+
+Both versions give us the exact same promise. So, if you're planning on wrapping a value in a promise, the recommended way is to use `Promise.resolve`
+
+## 7. What do I do in case an error shows up?
+
+One crucial fact to remember about promises is that _they fail silently_. This, in my opinion, is probably not the best design choice, but is something that must always be kept in mind. Unless you explicitly _handle_ an error thrown in the middle of a promise, it will go unnoticed.
+
+Fortunately for us though, handling errors in promises is _much_ easier that the old callback method (where each callback must handle its own error). In promises, things are done a bit differently : an error thrown anywhere in the promise chain, will trickle down to the last catch statement.
+
+```js
+promise1.then(()=>{
+  //An error occurs after promise1
+  throw new Error('I am an error')
+})
+.then(()=> {
+  //This is not executed
+  return promise2
+})
+.then(()=>{
+  //Nor is this
+  return promise3
+})
+.catch(err => {
+  //The error thrown from promise1 is captured here, as it would be were it thrown from promise2 or promise3
+  console.error(err)
+})
+```
+
+>💡 Remember : As a rule of thumb, always append a `catch` method at the end of a promise chain, or else you will forever be doomed to never know why your code is failing
