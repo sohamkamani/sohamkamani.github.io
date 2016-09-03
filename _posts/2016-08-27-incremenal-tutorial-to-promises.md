@@ -56,7 +56,7 @@ request.get('http://www.google.com/',(err, res)=> {
 
 The `(err, res)` function argument pattern is the standard signature of a callback in javascript (That standard being that the error is always the first argument, followed by the rest of the arguments, which can be the data or response).
 
->💡 We are going to be using the [superagent](https://www.npmjs.com/package/superagent) library throughout this series. This is because it supports async callbacks as well as promises.
+>💡 We are going to be using the [superagent](https://www.npmjs.com/package/superagent) library for making AJAX requests. This is because it supports async callbacks as well as promises.
 
 ## 3. What are promises and why do I need them?
 
@@ -221,6 +221,19 @@ containerPromise.then(newValue => {
 
 `containerPromise` also resolves to "foo", but in this case `containerPromise` actually resolves to `aNewPromise`, which resolves to "foo". (point 2)
 
+### It's easier with diagrams
+
+`aNewPromise` calls `originalPromise`'s `then` method to return a new promise that resolves to "foo"
+
+![diagram1](/assets/images/posts/promise-guide/pd1.svg)
+
+`containerPromise` calls `anotherPromise`'s `then` method to return a new promise that resolves to `aNewPromise`
+
+![diagram2](/assets/images/posts/promise-guide/pd2.svg)
+
+But, we know that `aNewPromise` resolves to "foo", so we can expand its block to get the overall diagram :
+
+![diagram3](/assets/images/posts/promise-guide/pd3.svg)
 
 ## 6. How do I create my own promise?
 
@@ -276,6 +289,10 @@ const theAnswerToEverything = Promise.resolve(42)
 
 Both versions give us the exact same promise. So, if you're planning on wrapping a value in a promise, the recommended way is to use `Promise.resolve`
 
+All versions of `theAnswerToEverything` can be shown as :
+
+![diagram4](/assets/images/posts/promise-guide/pd4.svg)
+
 ## 7. What do I do in case an error shows up?
 
 One crucial fact to remember about promises is that _they fail silently_. This, in my opinion, is probably not the best design choice, but is something that must always be kept in mind. Unless you explicitly _handle_ an error thrown in the middle of a promise, it will go unnoticed.
@@ -302,3 +319,42 @@ promise1.then(()=>{
 ```
 
 >💡 Remember : As a rule of thumb, always append a `catch` method at the end of a promise chain, or else you will forever be doomed to never know why your code is failing
+
+
+## 8. How do I execute promises in parallel?
+
+It's actually quite easy to execute multiple promises in parallel. For this, we make use of the `Promise.all` function.
+
+```js
+const request = require('superagent')
+
+const getGoogleHomePage = request.get('http://www.google.com/')
+const getBingHomePage = request.get('http://www.bing.com/')
+
+//Promise.all combines both our promises into another promise.
+const getBothHomepagesInParallel = Promise.all([getGoogleHomePage, getBingHomePage])
+
+getBothHomepagesInParallel
+  .then(responses => {
+
+    /*
+    `responses` is an array of results :
+    responses[0] is the result of just resolving `getGoogleHomePage`
+    responses[1] is the result of just resolving `getBingHomePage`
+    */
+
+    //This prints the google home page
+    console.log(responses[0].text)
+
+    //This prints the bing home page
+    console.log(responses[1].text)
+  })
+```
+
+`Promise.all` combines the two promises (`getGoogleHomePage` and `getBingHomePage`), and returns another promise, which resolves to an array of results, which are in the same order as the original promises. You can combine as many promises as required in this fashion.
+
+![diagram5](/assets/images/posts/promise-guide/pd5.svg) 
+
+>💡 Remember : `Promise.all` initiates all its member promises at the same time, and the combined promise only resolves when __all__ its member promises have resolved.
+
+In the above example, if `getGoogleHomePage` took 3 seconds to resolve, and `getBingHomePage` took 6 seconds to resolve, then `getBothHomepagesInParallel` would take 6 seconds to resolve.
