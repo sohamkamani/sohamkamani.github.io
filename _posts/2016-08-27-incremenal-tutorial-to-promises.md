@@ -37,22 +37,6 @@ Sometimes we need to execute some code only after an occurrence of some event (l
 
 Let's get started with a simple example : fetching the Google homepage!
 
-```js
-//This is just how we include the library we want in CommonJs syntax
-const request = require('superagent')
-
-//We send a request to get googles home page
-request.get('http://www.google.com/',(err, res)=> {
-  // We are now inside the callback! this only gets called once the request finishes
-  if(err){
-    // In case something goes wrong, we handle it here
-    console.error(err)
-  }
-
-  // Once we get the response, we print it to the console
-  console.log(res.text)
-})
-```
 <div id="example1"></div>
 
 The `(err, res)` function argument pattern is the standard signature of a callback in javascript (That standard being that the error is always the first argument, followed by the rest of the arguments, which can be the data or response).
@@ -63,14 +47,7 @@ The `(err, res)` function argument pattern is the standard signature of a callba
 
 The Promise is the new standard way of handling async actions, officially introduced as a part of ES6. You can think of a promise as something that represents a future value (and this is actually the definition given in most places), but really, its just a fancier way of handling async actions like the one we just saw above. In fact, lets see how the "Promisified" version of fetching a page from google looks like :
 
-```js
-request.get('http://www.google.com/')
-  .then((res)=> {
-    // Once we get the response, we print it to the console
-    console.log(res.text)
-  })
-  .catch(err => console.error(err))
-```
+<div id="example2"></div>
 
 The signature of a promise is it's `then` method. In fact, a good way to test if a variable `x` is a promise is to check the condition :
 
@@ -90,41 +67,11 @@ For the next example, we would like to fetch googles homepage and print the cont
 
 Let's take a look at how we would do this in callback world :
 
-```js
-const request = require('superagent')
-
-request.get('http://www.google.com/', (err, res) => {
-  if (err) {
-    console.error(err)
-  }
-
-  console.log(res.text)
-
-  //We call the second request inside the first ones callback, because we want to fire it only after we get the results of the first request
-  request.get('http://www.bing.com/', (err, res) => {
-    //We have to check for errors each time we make a request
-    if (err) {
-      console.error(err)
-    }
-
-    console.log(res.text)
-  })
-})
-```
+<div id="example3"></div>
 
 Now let's compare this to its promisified version :
 
-```js
-request.get('http://www.google.com/')
-  .then((res)=> {
-    console.log(res.text)
-    return request.get('http://www.bing.com/')
-  })
-  .then((res)=> {
-    console.log(res.text)
-  })
-  .catch(err => console.error(err))
-```
+<div id="example4"></div>
 
 We can generalize this and write it more generically :
 
@@ -172,24 +119,7 @@ Every promise has a `then` method. And this `then` method, on being called alway
 
 Take a moment to think about what this means. If each promise has a `then` method, and each `then` method returns another promise, then that means that it's possible to infinitely chain the `then` method. And this is indeed the case. In fact, if we re-wrote our previous example to look like :
 
-```js
-//A blank function
-const nothing = ()=>{}
-
-request.get('http://www.google.com/')
-  .then((res)=> {
-    console.log(res.text)
-  })
-  .then(nothing)
-  .then(nothing)
-  .then(nothing)
-  .then(()=> request.get('http://www.bing.com/'))    
-  })
-  .then((res)=> {
-    console.log(res.text)
-  })
-  .catch(err => console.error(err))
-```
+<div id="example5"></div>
 
 ...we would still get the same result as before. Now, what im about to say might be a little confusing, but bear with me :
 
@@ -242,13 +172,7 @@ Until now, all the examples we have seen so far were of promises that were creat
 
 For this example, we will make use of the most common async function in javascript : `setTimeout`, to create a promise. For this example, we want to resolve to the value "42", after 1 second. Here's how we would do that :
 
-```js
-const theAnswerToEverything = new Promise(resolve => {
-  setTimeout(()=>{
-    resolve(42)
-  }, 1000)
-})
-```
+<div id="example6"></div>
 
 Now, `theAnswerToEverything` is a promise that can be called like :
 
@@ -284,9 +208,7 @@ const theAnswerToEverything = new Promise(resolve => {
 
 ...or, to make it even simpler, we can use the `Promise.resolve` shorthand :
 
-```js
-const theAnswerToEverything = Promise.resolve(42)
-```
+<div id="example7"></div>
 
 Both versions give us the exact same promise. So, if you're planning on wrapping a value in a promise, the recommended way is to use `Promise.resolve`
 
@@ -326,31 +248,7 @@ promise1.then(()=>{
 
 It's actually quite easy to execute multiple promises in parallel. For this, we make use of the `Promise.all` function.
 
-```js
-const request = require('superagent')
-
-const getGoogleHomePage = request.get('http://www.google.com/')
-const getBingHomePage = request.get('http://www.bing.com/')
-
-//Promise.all combines both our promises into another promise.
-const getBothHomepagesInParallel = Promise.all([getGoogleHomePage, getBingHomePage])
-
-getBothHomepagesInParallel
-  .then(responses => {
-
-    /*
-    `responses` is an array of results :
-    responses[0] is the result of just resolving `getGoogleHomePage`
-    responses[1] is the result of just resolving `getBingHomePage`
-    */
-
-    //This prints the google home page
-    console.log(responses[0].text)
-
-    //This prints the bing home page
-    console.log(responses[1].text)
-  })
-```
+<div id="example8"></div>
 
 `Promise.all` combines the two promises (`getGoogleHomePage` and `getBingHomePage`), and returns another promise, which resolves to an array of results, which are in the same order as the original promises. You can combine as many promises as required in this fashion.
 
@@ -375,34 +273,11 @@ request.get('http://www.google.com/',(err, res)=> {
 
 To convert this to a promise, we simply wrap it in a `Promise` constructor :
 
-```js
-const getGoogleHomePage = new Promise((resolve, reject)=> {
-  request.get('http://www.google.com/',(err, res)=> {
-    if(err){
-      reject(err)
-    }
-    resolve(res)
-  })
-})
-
-//We can now use getGoogleHomePage like a regular promise :
-getGoogleHomePage
-  .then(res=> console.log(res.text))
-  .catch(err => console.error(err))
-```
+<div id="example9"></div>
 
 In fact, converting callbacks to promises is such a common problem, that theres many open source libraries, like [Bluebird](http://bluebirdjs.com/docs/api/promisification.html) that contain promisification as one of their core features. This makes converting callbacks to promises a piece of cake :
 
-```js
-const Promise = require('bluebird')
-const request = require('superagent')
-
-const promisifiedGetRequest = Promise.promisify(request.get)
-
-promisifiedGetRequest('http://www.google.com/')
-    .then(res => console.log(res.text))
-    .catch(err => console.error(err))
-```
+<div id="example10"></div>
 
 <script src="https://embed.tonicdev.com"></script>
 <script>
