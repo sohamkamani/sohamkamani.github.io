@@ -1,6 +1,6 @@
 ---
 layout: post
-title: An incremental tutorial to promises in javascript 🐾
+title: An incremental tutorial on promises in javascript 🐾
 date: 2016-08-28T00:45:12.000Z
 categories: javascript promises beginners guide tutorial
 comments: true
