@@ -14,7 +14,7 @@ comments: true
 1. How do I create my own promise?
 1. I want to transform a resolved value from a promise, before passing it on to the promise chain. What do I do?
 1. I want to execute 3 promises in sequence. I want to construct my third promise based on the results of both the first and second promise. What do I do?
-1. I really like promises, but many libraries I have make use of callbacks. Can I transform these to promises?
+1. Can I transform callbacks to promises?
 1. I want to conditionally execute a promise, and return a synchronous value if the condition is not satisfied. However, there is another promise down the chain. How do I deal with this?
 1. Promises still seem pretty awkward. Any cooler alternatives?
 
@@ -53,6 +53,7 @@ request.get('http://www.google.com/',(err, res)=> {
   console.log(res.text)
 })
 ```
+<div id="example1"></div>
 
 The `(err, res)` function argument pattern is the standard signature of a callback in javascript (That standard being that the error is always the first argument, followed by the rest of the arguments, which can be the data or response).
 
@@ -353,8 +354,78 @@ getBothHomepagesInParallel
 
 `Promise.all` combines the two promises (`getGoogleHomePage` and `getBingHomePage`), and returns another promise, which resolves to an array of results, which are in the same order as the original promises. You can combine as many promises as required in this fashion.
 
-![diagram5](/assets/images/posts/promise-guide/pd5.svg) 
+![diagram5](/assets/images/posts/promise-guide/pd5.svg)
 
 >💡 Remember : `Promise.all` initiates all its member promises at the same time, and the combined promise only resolves when __all__ its member promises have resolved.
 
 In the above example, if `getGoogleHomePage` took 3 seconds to resolve, and `getBingHomePage` took 6 seconds to resolve, then `getBothHomepagesInParallel` would take 6 seconds to resolve.
+
+## 9. Can I transform callbacks to promises?
+
+Yes, you can. It's exactly the same as creating your own promise. Consider the example of the callback style request for googles homepage :
+
+```js
+request.get('http://www.google.com/',(err, res)=> {
+  if(err){
+    console.error(err)
+  }
+  console.log(res.text)
+})
+```
+
+To convert this to a promise, we simply wrap it in a `Promise` constructor :
+
+```js
+const getGoogleHomePage = new Promise((resolve, reject)=> {
+  request.get('http://www.google.com/',(err, res)=> {
+    if(err){
+      reject(err)
+    }
+    resolve(res)
+  })
+})
+
+//We can now use getGoogleHomePage like a regular promise :
+getGoogleHomePage
+  .then(res=> console.log(res.text))
+  .catch(err => console.error(err))
+```
+
+In fact, converting callbacks to promises is such a common problem, that theres many open source libraries, like [Bluebird](http://bluebirdjs.com/docs/api/promisification.html) that contain promisification as one of their core features. This makes converting callbacks to promises a piece of cake :
+
+```js
+const Promise = require('bluebird')
+const request = require('superagent')
+
+const promisifiedGetRequest = Promise.promisify(request.get)
+
+promisifiedGetRequest('http://www.google.com/')
+    .then(res => console.log(res.text))
+    .catch(err => console.error(err))
+```
+
+<script src="https://embed.tonicdev.com"></script>
+<script>
+var examples = [
+'//This is just how we include the library we want in CommonJs syntax\nconst request = require(\'superagent\')\n\n//We send a request to get googles home page\nrequest.get(\'http://www.google.com/\',(err, res)=> {\n  // We are now inside the callback! this only gets called once the request finishes\n  if(err){\n    // In case something goes wrong, we handle it here\n    console.error(err)\n  }\n\n  // Once we get the response, we print it to the console\n  console.log(res.text)\n})',
+'const request = require(\'superagent\')\n\nrequest.get(\'http://www.google.com/\')\n  .then((res)=> {\n    // Once we get the response, we print it to the console\n    console.log(res.text)\n  })\n  .catch(err => console.error(err))',
+'const request = require(\'superagent\')\n\nrequest.get(\'http://www.google.com/\', (err, res) => {\n  if (err) {\n    console.error(err)\n  }\n\n  console.log(res.text)\n\n  //We call the second request inside the first ones callback, because we want to fire it only after we get the results of the first request\n  request.get(\'http://www.bing.com/\', (err, res) => {\n    //We have to check for errors each time we make a request\n    if (err) {\n      console.error(err)\n    }\n\n    console.log(res.text)\n  })\n})',
+'const request = require(\'superagent\')\n\nrequest.get(\'http://www.google.com/\')\n  .then((res)=> {\n    console.log(res.text)\n    return request.get(\'http://www.bing.com/\')\n  })\n  .then((res)=> {\n    console.log(res.text)\n  })\n  .catch(err => console.error(err))',
+'const request = require(\'superagent\')\n\nconst nothing = ()=>{}\n\nrequest.get(\'http://www.google.com/\')\n  .then((res)=> {\n    console.log(res.text)\n  })\n  .then(nothing)\n  .then(nothing)\n  .then(nothing)\n  .then(()=> request.get(\'http://www.bing.com/\'))\n  .then((res)=> {\n    console.log(res.text)\n  })\n  .catch(err => console.error(err))',
+'const theAnswerToEverything = new Promise(resolve => {\n  setTimeout(()=>{\n    resolve(42)\n  }, 1000)\n})\n\ntheAnswerToEverything\n  .then(answer => console.log(answer))\n  //Prints 42',
+'const theAnswerToEverything = Promise.resolve(42)\n\ntheAnswerToEverything\n  .then(answer => console.log(answer))\n  //Prints 42',
+'const request = require(\'superagent\')\n\nconst getGoogleHomePage = request.get(\'http://www.google.com/\')\nconst getBingHomePage = request.get(\'http://www.bing.com/\')\n\n//Promise.all combines both our promises into another promise.\nconst getBothHomepagesInParallel = Promise.all([getGoogleHomePage, getBingHomePage])\n\ngetBothHomepagesInParallel\n  .then(responses => {\n\n    /*\n    `responses` is an array of results :\n    responses[0] is the result of just resolving `getGoogleHomePage`\n    responses[1] is the result of just resolving `getBingHomePage`\n    */\n\n    //This prints the google home page\n    console.log(responses[0].text)\n\n    //This prints the bing home page\n    console.log(responses[1].text)\n  })',
+'const request = require(\'superagent\')\n\nconst getGoogleHomePage = new Promise((resolve, reject)=> {\n  request.get(\'http://www.google.com/\',(err, res)=> {\n    if(err){\n      reject(err)\n    }\n    resolve(res)\n  })\n})\n\ngetGoogleHomePage\n  .then(res=> console.log(res.text))\n  .catch(err => console.error(err))',
+'const Promise = require(\'bluebird\')\nconst request = require(\'superagent\')\n\nconst promisifiedGetRequest = Promise.promisify(request.get)\n\npromisifiedGetRequest(\'http://www.google.com/\')\n    .then(res => console.log(res.text))\n    .catch(err => console.error(err))'
+]
+
+examples.forEach((example, i) => {
+  Tonic.createNotebook({
+    // the parent element for the new notebook
+    element: document.getElementById("example" + (i+1)),
+
+    // specify the source of the notebook
+    source: example
+})
+  })
+</script>
