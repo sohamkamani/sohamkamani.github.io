@@ -45,7 +45,7 @@ It's also worth noting that this guide is written in ES6 (the latest version of 
 Most of the code written in javascript is synchronous (read "normal"), which means that each statement is executed one after the other.  
 Sometimes we need to execute some code only after an occurrence of some event (like when someone clicks a button, or when the database finally responds to our query). We cannot always wait for these events to complete, because it takes time... time that we can otherwise use to execute some other code. This code which we execute only once something happens and not along with the other synchronous code, is called asynchronous code.
 
->💡 Remember : although async code is executed at a different time than the synchronous code, that doesn't mean its executed on another thread. You can read more detials about this [here](/blog/2016/03/14/wrapping-your-head-around-async-programming/)
+>💡 Remember : although async code is executed at a different time than the synchronous code, that doesn't mean its executed on another thread. You can read more details about this [here](/blog/2016/03/14/wrapping-your-head-around-async-programming/)
 
 ### Our first async action
 
@@ -141,7 +141,7 @@ Take a moment to think about what this means. If each promise has a `then` metho
 
 <div id="example5"></div>
 
-...we would still get the same result as before. Now, what im about to say might be a little confusing, but bear with me :
+...we would still get the same result as before. Now, what i'm about to say might be a little confusing, but bear with me :
 
 1. _The `then` method of a promise returns another promise that resolves to the value returned by its callback_
 2. _A promise (A) that resolves to another promise (B), actually resolves to the value resolved by that promise (B)_
@@ -312,7 +312,7 @@ In fact, converting callbacks to promises is such a common problem, that theres 
 
 This is an issue which doesn't come up _all_ that often, but it still comes up often enough that I thought it should be covered.
 
-Consider the example in [section 4](#example4), where we chained the promises to get the google and bing homepages one after the other (in sequence). Only, in this case, instead of logging each homepage one after the other, we want to log both pages once we fetch the second page. (Note that this is different from the parallel promises example. In this case, we call the promises one after the other, but _print_ the results to the console together). What would happen if we went the same route are [section 4](#example4) ?
+Consider the example in [section 4](#example4), where we chained the promises to get the google and bing home pages one after the other (in sequence). Only, in this case, instead of logging each homepage one after the other, we want to log both pages once we fetch the second page. (Note that this is different from the parallel promises example. In this case, we call the promises one after the other, but _print_ the results to the console together). What would happen if we went the same route are [section 4](#example4) ?
 
 ```js
 const request = require('superagent')
