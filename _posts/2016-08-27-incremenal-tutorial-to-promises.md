@@ -11,6 +11,8 @@ comments: true
 Promises are arguably one of the trickiest concepts to grasp in the javascript world, and even if you know how to use them, it's difficult to explain how they actually work.  
 This FAQ style tutorial is meant for both beginners and intermediates in the world of promises.  If you're a beginner and have trouble grasping what a promise even _is_, then go on ahead and start from the first question. If you know a little about promises, jump through the questions until you find one on interest (the sections in this tutorial are of increasing complexity as you go further)
 
+<!-- more -->
+
 ### Contents
 
 1. [What do I need to know to go through this guide?](#c1)
