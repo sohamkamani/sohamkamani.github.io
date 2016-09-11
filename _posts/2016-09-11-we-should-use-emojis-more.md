@@ -10,6 +10,8 @@ Emojis have finally become mainstream! Yet, their use is restricted to only IM c
 This reputation has stemmed from the good old days of text-smileys -- you know : :-) :-( :-@ ;) :'( , and for good reason. text-smileys often mixed in with the actual text of the content and so it made it very difficult to read large blocks of text with stuff like ;-) scattered throughout. Emojis are different.
 Emojis stand out✨. This is important, because anything that stands out in a piece of text tends to catch the readers attention first. Whenever you quickly skim through a long article, what catches your eye first? It's the images and diagrams you look at that gives you a general feel for what the article stands for. Emojis now give you this power of emphasis at the sentence level 💪.
 
+<!-- more -->
+
 Just look at these two work related emails :
 
 >__Subject__ : Congratulations
