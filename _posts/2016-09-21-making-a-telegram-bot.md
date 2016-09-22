@@ -3,6 +3,7 @@ layout: post
 title: How to make a responsive telegram bot 🔩
 date: 2016-09-21T00:45:12.000Z
 categories: telegram bot javascript nodejs
+main_image: "/assets/images/posts/telegram-bot/header.png"
 comments: true
 ---
 
