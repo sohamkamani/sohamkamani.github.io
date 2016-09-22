@@ -14,6 +14,8 @@ I spent a considerable amount of time figuring out how to make a functional tele
 
 So, heres how to make a responsive telegram bot with the least amount of hassle :
 
+<!-- more -->
+
 ### Set up your bot
 
 You don't need to write any code for this. In fact, you don't even need your computer! Go to the telegram app on your phone and...
