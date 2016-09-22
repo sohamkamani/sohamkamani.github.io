@@ -1,10 +1,14 @@
 ---
 layout: post
-title: How to make a telegram bot
+title: How to make a responsive telegram bot 🔩
 date: 2016-09-21T00:45:12.000Z
 categories: telegram bot javascript nodejs
 comments: true
 ---
+
+>This tutorial will go through a straightforward set of steps to get a responsive telegram bot up and running from scratch
+
+![header](/assets/images/posts/telegram-bot/header.png)
 
 I spent a considerable amount of time figuring out how to make a functional telegram bot. I mean sure, the [official introduction](https://core.telegram.org/bots) is good, but theres a lot of stuff about what bots are, and a few scattered instructions about the API, but not enough of structure for a beginner to get up and running quickly.  
 
@@ -106,7 +110,8 @@ app.post('/new-message', function(req, res) {
     })
     .catch(err => {
       // ...and here if it was not
-      throw new Error(err)
+      console.log('Error :', err)
+      res.end('Error :' + err)
     })
 
 });
@@ -120,3 +125,74 @@ app.listen(3000, function() {
 You can run this server on your local machine by running `node index.js`
 
 If all goes well, you should see the message "Telegram app listening on port 3000!" printed on your console.
+
+But, this is not enough. The bot cannot call an API if it is running on your local machine. It needs a public domain name. This means we have to deploy our application.
+
+### Deploy your service
+
+You can deploy your server any way you want, but I find it really quick and easy to use a service called [now](https://zeit.co/now).
+
+Install now on your system :
+
+```
+npm install -g now
+```
+
+Add a start script to your `package.json` file.
+
+My original `package.json` file looks like :
+
+```js
+{
+  "name": "telegram-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Soham Kamani <sohamkamani@gmail.com> (http://sohamkamani.com)",
+  "license": "ISC"
+}
+```
+
+Add a start script, to get :
+
+```
+{
+  "name": "telegram-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "node index.js"
+  },
+  "author": "Soham Kamani <sohamkamani@gmail.com> (http://sohamkamani.com)",
+  "license": "ISC"
+}
+```
+
+Once you've added the script, run the command :
+
+```sh
+now
+```
+
+(remember to run in in the root of your project folder, wherever the `package.json` file is located)
+
+If this is your first time using "now", you will see some instructions for signing in, but after that you should see something like this :
+
+![now](/assets/images/posts/telegram-bot/now-dep.png)
+
+Great! This means your server is deployed on `https://telegram-bot-zztjfeqtga.now.sh` (or whatever link you see instead), and your API would be present on `https://telegram-bot-zztjfeqtga.now.sh/new-message` (as defined in `index.js`)
+
+Now, all we need to do is let telegram know that our bot has to talk to this url whenver it receives any message. We do this through the telegram API. Enter this in your terminal :
+
+```sh
+curl -F "url=https://telegram-bot-zztjfeqtga.now.sh/new-message"  https://api.telegram.org/bot<your_api_token>/setWebhook
+```
+
+...and you're pretty much done! Try chatting with your newly made bot and see what happens!
+
+![result](/assets/images/posts/telegram-bot/result.jpg)
