@@ -20,7 +20,7 @@ For example, consider a database which has a list of peoples names, along with t
 
 ![normal-flow](/assets/images/posts/js-cache/normal-example.svg)
 
-This seems pretty straightforward, but can sometimes be inefficient. If there are a lot of people who want to know Dougs age, and we get many requests to our server asking for it, we should find a better way than to query the database each time we receive a request (Since so many database queries can be expensive).
+This seems pretty straightforward, but can sometimes be inefficient. If there are a lot of people who want to know Doug's age, and we get many requests to our server asking for it, we should find a better way than to query the database each time we receive a request (Since so many database queries can be expensive).
 
 __Enter : the cache layer__
 
@@ -135,7 +135,7 @@ which should give you something like :
 time taken : 1.012
 ```
 
-You should also see "Fetching from db" on your console everytime you make a request.
+You should also see "Fetching from db" on your console every time you make a request.
 
 ### Creating our cache layer
 
