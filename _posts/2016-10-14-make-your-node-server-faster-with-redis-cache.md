@@ -1,14 +1,17 @@
 ---
 layout: post
-title: Make your node server faster by caching responses with redis
+title: Make your node server faster by caching responses with redis ⏰
 date: 2016-10-14T08:45:12.000Z
 categories: javascript node js redis caching cache
+main_image: "/assets/images/posts/js-cache/logo.png"
 comments: true
 ---
 
 NodeJs is known for its speed with respect to async tasks, but there's still a lot of potential to make responses from your server even faster, sometimes by orders of magnitude.
 
 In this post, we are going to go through a brief introduction to the concept of caching, along with a tutorial on how to implement it using redis and an express server.
+
+![banner](/assets/images/posts/js-cache/logo.png)
 
 ## What is caching?
 
