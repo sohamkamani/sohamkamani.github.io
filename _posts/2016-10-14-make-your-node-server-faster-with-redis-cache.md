@@ -13,6 +13,8 @@ In this post, we are going to go through a brief introduction to the concept of 
 
 ![banner](/assets/images/posts/js-cache/logo.png)
 
+<!-- more -->
+
 ## What is caching?
 
 Normally, when you make a web server with a database, each request to the server entails one or more requests to the database, and some processing of the results before sending back a response.
