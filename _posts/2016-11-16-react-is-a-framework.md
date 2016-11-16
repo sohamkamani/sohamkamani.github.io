@@ -18,7 +18,7 @@ This would have made sense when the React ecosystem was still in its early stage
 
 When someone says "We have used React to build our web application", they almost never mean that React is _all_ they use (contrary to other frameworks like angular or ember). In fact, it's actually impossible to make a website *only* with React. This is because the only thing React (and I mean the actual React library) does, is provide a way to represent and update HTML as functions. To actually call and render those functions on a browser, you would need ReactDOM as well.
 
-The word "React" is used more to refer to an entire stack of libraries and frameworks rather than the React library alone, and it is precisely this stack of libraries that people refer to when they say "React". The obvious problem with this is, that different people have a different perception of what an ideal React stack is. For me personally, I have sometimes (wrongly) assumed that any website using React is _obviously_ using redux for state management as well.
+The term "React" is now used more to refer to an entire stack of libraries and frameworks rather than the React library alone. The obvious problem with this is, that different people have a different perception of what an ideal React stack is. For me personally, I have sometimes (wrongly) assumed that any website using React is _obviously_ using redux for state management as well.
 
 Like it or not, the term "React" has now become synonymous with a framework consisting of isolated libraries that have come to support the functionality required in a full fledged framework. This is both a pain in backside, and a blessing in disguise.
 
