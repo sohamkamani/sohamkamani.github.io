@@ -199,3 +199,5 @@ As you can see, with the power of docker we were able to get a mongo replica set
 - In case we remove one of our containers by mistake, the data would also vanish. Using [Docker volumes](https://docs.docker.com/v1.10/engine/userguide/containers/dockervolumes/) and setting the appropriate `--dbpath` when running `mongod` would prevent this from happening.
 
 Finally, instead of running a bunch of shell scripts, you may find it more convenient to automate this whole process by using multi-container automation tools like [docker-compose](https://docs.docker.com/compose/).
+
+If you liked this post, you may also like my other post on [building a (very) lightweight web server in docker with busybox and Go](/blog/2016/11/22/docker-server-busybox-golang/)
