@@ -8,6 +8,8 @@ comments: true
 
 XSS(Cross site scripting) attacks are one one of the easiest attacks to perform, and are often the starting point for many attackers looking to compromise your website. Fortunately, they are also one of the easiest to avoid.
 
+<!-- more -->
+
 The best way to explain what XSS is, is to dive right into an example. This is an HTML element :
 
 ```html
