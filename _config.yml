@@ -19,3 +19,7 @@ gems: [jekyll-paginate]
 markdown: kramdown
 
 excerpt_separator: "<!-- more -->"
+
+gems:
+  - jekyll-sitemap
+  - jekyll-paginate
