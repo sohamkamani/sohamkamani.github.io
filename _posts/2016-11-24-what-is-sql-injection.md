@@ -10,6 +10,8 @@ So you thought your database was completely safe? Well, for the most part, it ac
 
 This post will explain why SQL injection occurs and how you can prevent it.
 
+<!-- more -->
+
 For starters, lets assume there's a simple form on your website to sign up a new user.
 
 ![signupform](/assets/images/posts/web-security-essentials/signupform.png)
