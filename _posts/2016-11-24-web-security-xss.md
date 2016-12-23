@@ -55,7 +55,8 @@ Many frameworks and tools like jQuery, angular, and react have this built in so 
 
 If you want to learn more about security on the web, be sure to read my other posts on web security essentials :
 
-[SQL Injection](/blog/2016/11/24/what-is-sql-injection/)
+[SQL Injection](/blog/2016/11/24/what-is-sql-injection/)  
+[CORS (Cross origin resource sharing)](/blog/2016/11/24/web-security-cors/)
 
 <script src="/assets/scripts/xhr-html-encode.min.js">
 </script>
