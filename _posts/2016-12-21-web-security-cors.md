@@ -10,6 +10,8 @@ CORS, or cross origin resource sharing, is one of the most misunderstood concept
 
 This post will go through some of the key concepts of CORS, and emphasize why we need it for the modern web.
 
+<!-- more -->
+
 ## What is CORS?
 
 The best way to explain it is through an example.  
