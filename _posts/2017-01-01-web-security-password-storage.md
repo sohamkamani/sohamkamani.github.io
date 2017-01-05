@@ -10,6 +10,8 @@ Passwords are a nightmare. If you _can_ offload password storage to a third part
 
 This post will explain password storage in baby steps, so that we can understand why passwords are stored the way they are, and why it's not as straightforward as it seems.
 
+<!-- more -->
+
 ## Method #1 - Just store it like anything else
 
 I can hear you say  "What's all the fuss about! Why can't I just store the password like any other data?".
