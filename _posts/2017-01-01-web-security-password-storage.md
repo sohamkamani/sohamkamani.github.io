@@ -105,5 +105,5 @@ If you want to implement these steps for fun and learning, thats all good, but f
 If you want to learn more about security on the web, be sure to read my other posts on web security essentials :
 
 [SQL Injection](/blog/2016/11/24/what-is-sql-injection/)  
-[CORS (Cross origin resource sharing)](/blog/2016/11/24/web-security-cors/)
+[CORS (Cross origin resource sharing)](/blog/2016/11/24/web-security-cors/)  
 [XSS (Cross site scripting)](/blog/2016/11/24/web-security-xss/)
