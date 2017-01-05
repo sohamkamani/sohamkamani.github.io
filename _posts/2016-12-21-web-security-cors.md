@@ -88,4 +88,4 @@ If you want to learn more about security on the web, be sure to read my other po
 
 [XSS (Cross site scripting)](/blog/2016/11/24/web-security-xss/)  
 [SQL Injection](/blog/2016/11/24/what-is-sql-injection/)
-[Password storage](/blog/2016/11/24/web-security-password-management/)
+[Password storage](/blog/2016/11/24/web-security-password-storage/)
