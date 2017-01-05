@@ -36,7 +36,7 @@ This sees to the **quantity of content** uploaded, which means that other users 
 ## "But my life is not that interesting"
 
 Again, the previous point strengthens this one, but what if your day is so dull that there is really nothing even remotely interesting to post? Well, snapchat's got your back. With all the filters and selfie lenses, any user can instantly transfom themselves into a zombie, beauty queen, or dog. Whats more, these lenses get updated almost everyday, so there is always something new to see. I personally have seen many snaps of people where all they do is mess around with the face morphs.  
-I mean where else can yo do *this* :
+I mean where else can you do *this* :
 
 ![face-morph-1](/assets/images/posts/snapchat-doing-well/face-morph-1.jpg)
 
