@@ -87,6 +87,6 @@ However, you won't be able to read this response for the same reasons as before.
 If you want to learn more about security on the web, be sure to read my other posts on web security essentials :
 
 [XSS (Cross site scripting)](/blog/2016/11/24/web-security-xss/)  
-[SQL Injection](/blog/2016/11/24/what-is-sql-injection/)
-[Password storage](/blog/2017/01/01/web-security-password-storage/)
+[SQL Injection](/blog/2016/11/24/what-is-sql-injection/)  
+[Password storage](/blog/2017/01/01/web-security-password-storage/)  
 [Sessions and cookies](/blog/2017/01/08/web-security-session-cookies/)
