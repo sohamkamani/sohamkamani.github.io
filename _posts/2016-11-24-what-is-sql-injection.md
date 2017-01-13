@@ -53,5 +53,6 @@ __Use an ORM instead of writing your own queries.__ ORMs like [this one](https:/
 If you want to learn more about security on the web, be sure to read my other posts on web security essentials :
 
 [XSS (Cross site scripting)](/blog/2016/11/24/web-security-xss/)  
-[CORS (Cross origin resource sharing)](/blog/2016/11/24/web-security-cors/)
-[Password storage](/blog/2016/11/24/web-security-password-storage/)
+[CORS (Cross origin resource sharing)](/blog/2016/12/21/web-security-cors/)
+[Password storage](/blog/2017/01/01/web-security-password-storage/)
+[Sessions and cookies](/blog/2017/01/08/web-security-session-cookies/)

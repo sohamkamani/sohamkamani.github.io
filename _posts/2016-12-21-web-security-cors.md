@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  Web security essentials - CORS (Cross origin resource sharing) 🔑
-date:   2016-11-24 08:45:12
+date:   2016-12-21 08:45:12
 categories: web security cors cross origin resource sharing
 comments: true
 ---
@@ -88,4 +88,5 @@ If you want to learn more about security on the web, be sure to read my other po
 
 [XSS (Cross site scripting)](/blog/2016/11/24/web-security-xss/)  
 [SQL Injection](/blog/2016/11/24/what-is-sql-injection/)
-[Password storage](/blog/2016/11/24/web-security-password-storage/)
+[Password storage](/blog/2017/01/01/web-security-password-storage/)
+[Sessions and cookies](/blog/2017/01/08/web-security-session-cookies/)
