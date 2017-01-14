@@ -120,6 +120,11 @@ h6 {
 /**
  * Links
  */
+
+p a {
+    text-decoration: underline;
+}
+
 a {
     color: $brand-color;
     text-decoration: none;
