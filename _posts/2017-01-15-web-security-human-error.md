@@ -39,9 +39,9 @@ There is a chance that someone might leave their laptop open by mistake in a pla
 
 This is why users should always be reauthenticated before performing an action that may compromise their security. For example, many websites like Google require you to enter your password again if you are changing your phone number, alternate email, or date of birth.
 
-## 3. Log you users out after some time
+## 3. Log your users out after some time
 
-Joe went and visited a public internet cafe to check his bank details online. The problem is that Joe, being the careless person that he is forgot to log out of his online banking portal. 
+Joe went and visited a public internet cafe to check his bank details online. The problem is that Joe, being the careless person that he is, forgot to log out of his online banking portal. 
 
 Ordinarily anyone who uses that same computer would now have access to Joes banking portal. Fortunately, the banking portal had a session expiry time of 15 minutes, which means that if there is no activity on the website for more than 15 minutes, the current user is automatically logged out.
 
