@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  Web security essentials - Human error and  UI/UX design 🔑
+title:  Web security essentials - Human error and UI/UX design 🔑
 date:   2017-01-14 08:45:12
 categories: web security human error phishing
 comments: true
@@ -21,7 +21,7 @@ Here are a few tips you can implement on your website to save your users from th
 
 <!-- more -->
 
-## 1. Watch your ads
+## 1. Watch your external content
 
 Ads are a necessary evil. No one wants to put them their website, but sometimes, they are the only way to pay the bills. What we _can_ do, however, is watch where and how we place this kind of external content, because this is something we do not have full control over.
 
