@@ -102,7 +102,7 @@ Restating the point I made in the beginning of this post, never write your own p
 
 If you want to implement these steps for fun and learning, thats all good, but for production usage, you would be much better off using existing libraries. [Bcrypt](https://en.wikipedia.org/wiki/Bcrypt) is a good example of an algorithm used for hashing and salting passwords. It also has implementations and libraries in most programming languages.
 
-If you want to learn more about security on the web, be sure to read my other posts on web security essentials :
+If you want to learn more about security on the web, be sure to read my [other posts on web security essentials](/blog/2017/01/16/web-security-essentials/) :
 
 [SQL Injection](/blog/2016/11/24/what-is-sql-injection/)  
 [CORS (Cross origin resource sharing)](/blog/2016/12/21/web-security-cors/)  

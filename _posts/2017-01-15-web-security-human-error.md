@@ -66,7 +66,7 @@ Every time I sign in to my Google or Twitter account from a new device, or from 
 
 Letting a user know when they have logged in from another can do a great deal in preventing a lot of damage _if_ someone _has in fact_ hacked in to their account.
 
-If you want to learn more about security on the web, be sure to read my other posts on web security essentials :
+If you want to learn more about security on the web, be sure to read my [other posts on web security essentials](/blog/2017/01/16/web-security-essentials/) :
 
 [XSS (Cross site scripting)](/blog/2016/11/24/web-security-xss/)  
 [CORS (Cross origin resource sharing)](/blog/2016/12/21/web-security-cors/)  

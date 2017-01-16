@@ -84,7 +84,7 @@ However, you won't be able to read this response for the same reasons as before.
 
 2.__CORS can be stricter than usual__ : The above comic is not always true. If a server really does not want other clients to receive a response, it can disable CORS for non browser clients as well. This means that you can _only_ make requests from the same origin, and that tools like postman and curl can't make requests either. Although this is possible, it generally isn't the case.
 
-If you want to learn more about security on the web, be sure to read my other posts on web security essentials :
+If you want to learn more about security on the web, be sure to read my [other posts on web security essentials](/blog/2017/01/16/web-security-essentials/) :
 
 [XSS (Cross site scripting)](/blog/2016/11/24/web-security-xss/)  
 [SQL Injection](/blog/2016/11/24/what-is-sql-injection/)  

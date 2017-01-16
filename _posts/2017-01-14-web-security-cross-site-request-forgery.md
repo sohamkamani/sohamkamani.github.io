@@ -51,7 +51,7 @@ Everytime the client makes a request, the CSRF token is embedded in one of the f
 
 This way, even if another site sends a malicious request with the cookies from _facehook.com_, the request still won't contain the CSRF token, and so will not be entertained by the server.
 
-If you want to learn more about security on the web, be sure to read my other posts on web security essentials :
+If you want to learn more about security on the web, be sure to read my [other posts on web security essentials](/blog/2017/01/16/web-security-essentials/) :
 
 [SQL Injection](/blog/2016/11/24/what-is-sql-injection/)  
 [CORS (Cross origin resource sharing)](/blog/2016/12/21/web-security-cors/)  

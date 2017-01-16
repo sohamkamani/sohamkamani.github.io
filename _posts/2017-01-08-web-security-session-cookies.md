@@ -47,7 +47,7 @@ If you want to see the cookies currently stored for the current website you are 
 ![cookie tab](/assets/images/posts/web-security-essentials/cookie-screenshot.png)
 
 
-If you want to learn more about security on the web, be sure to read my other posts on web security essentials :
+If you want to learn more about security on the web, be sure to read my [other posts on web security essentials](/blog/2017/01/16/web-security-essentials/) :
 
 [SQL Injection](/blog/2016/11/24/what-is-sql-injection/)  
 [CORS (Cross origin resource sharing)](/blog/2016/12/21/web-security-cors/)  

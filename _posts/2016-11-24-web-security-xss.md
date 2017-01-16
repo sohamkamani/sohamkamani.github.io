@@ -53,7 +53,7 @@ Try it out for yourself! Enter some text with some sensitive HTML characters, an
 
 Many frameworks and tools like jQuery, angular, and react have this built in so you don't normally have to worry. But this is still something you should keep an eye out for.
 
-If you want to learn more about security on the web, be sure to read my other posts on web security essentials :
+If you want to learn more about security on the web, be sure to read my [other posts on web security essentials](/blog/2017/01/16/web-security-essentials/) :
 
 [SQL Injection](/blog/2016/11/24/what-is-sql-injection/)  
 [CORS (Cross origin resource sharing)](/blog/2016/12/21/web-security-cors/)  

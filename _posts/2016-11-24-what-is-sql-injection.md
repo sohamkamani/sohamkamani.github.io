@@ -50,7 +50,7 @@ This is actually easier said than done, considering larger projects often have h
 
 __Use an ORM instead of writing your own queries.__ ORMs like [this one](https://ponyorm.com/#) for python, or [this one](http://sequelize.readthedocs.io/en/v3/) for NodeJs make sure that your queries are safe, even if you have a lot of questionable characters in your input parameters.
 
-If you want to learn more about security on the web, be sure to read my other posts on web security essentials :
+If you want to learn more about security on the web, be sure to read my [other posts on web security essentials](/blog/2017/01/16/web-security-essentials/) :
 
 [XSS (Cross site scripting)](/blog/2016/11/24/web-security-xss/)  
 [CORS (Cross origin resource sharing)](/blog/2016/12/21/web-security-cors/)  
