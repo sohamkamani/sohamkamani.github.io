@@ -25,7 +25,7 @@ Consider two websites : a not-so-innocent news website (lets call it _sillyfaken
 
 It turns out that _sillyfakenews.com_, along with showing you news, is also trying to compromise your facehook account. It sends a `POST` request to facehook to unfriend a few people on your friend list (This can be done very easily by using HTML forms and a bit of javascript. Any website can actually make an invisible form and even submit it on your behalf, without you ever having to click a button. Check out the [input hidden](http://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_input_type_hidden) field to see how).
 
-Now, since you already have an active session with facehook on the same browser ,and most likely have session information stored in the form of [cookies](/blog/2017/01/08/web-security-session-cookies/), all this information is not sent along with the forged request. According to the facehook server, it's as if this request was sent from the user while browsing on their site itself, and is therefore treated as a legitimate request.
+Now, since you already have an active session with facehook on the same browser ,and most likely have session information stored in the form of [cookies](/blog/2017/01/08/web-security-session-cookies/), all this information is now sent along with the forged request. According to the facehook server, it's as if this request was sent from the user while browsing on their site itself, and is therefore treated as a legitimate request.
 
 The way browsers are designed, _any_ request made from _any_ site is treated the same with respect to cookies. This is why even though the request to facehook is _sent_ from _sillyfakenews.com_, all the cookies associated with the current logged in session in _facehook.com_ are sent as well.
 
@@ -45,7 +45,7 @@ Since this is basically something a browser respects, CSRF would still be a legi
 
 ### Issue a CSRF token
 
-This is the most popular method to counter CSRF potential attacks. With every session the user is on, a unique CSRF token is issued. This token is a bunch of random characters that cannot be predicted by any potential adversaries. 
+This is the most popular method to counter CSRF potential attacks. With every session the user is on, a unique CSRF token is issued. This token is a bunch of random characters that cannot be predicted by any potential adversaries.
 
 Everytime the client makes a request, the CSRF token is embedded in one of the fields (most of the times in the request header). This token is then verified on the server.
 
