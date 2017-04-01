@@ -10,7 +10,7 @@ Redux is a terribly simple library for state management, and has made working wi
 
 There is an entire library, called [react-redux](https://github.com/reactjs/react-redux) whose sole purpose is to seamlessly integrate redux's state management into a React application. I feel that it's important to know what's going on when you do something that essentially forms the backbone of your application.
 
-<!--more-->
+<!-- more -->
 
 ## React and redux on their own
 
