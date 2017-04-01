@@ -259,3 +259,5 @@ Although this approach is not a silver bullet, it works well as a simple solutio
 >Our data service is *not* a reducer. It is not a pure function. It has side effects. It is simply a layer in between our actions and reducers which dipatches other actions.
 
 The full source code of this example can be found [here](https://github.com/sohamkamani/blog-example__redux-data) and the working example can be seen [here](http://www.sohamkamani.com/blog-example__redux-data/).
+
+If you want to know more about `connect`, `Provider` and the `react-redux` library, check out my post on [connecting React and redux](/blog/2017/03/31/react-redux-connect-explained/)
