@@ -10,11 +10,13 @@ There are lots of times where enums are useful, and sometimes even nessecary.
 
 Although javascript does not natively support enums, there are a lot of options when it comes to implementing enums using javascript.
 
+<!-- more -->
+
 # The naive way of implementing "enums"
 
 Enums are used to represent a fixed number of possible values. If the number of possible values are 2 (as in the case with flags), you would just use a boolean.
 
-For example, if you want to show a pop up in your application, but only in the summer, it would look something like this :
+For example, if you want to show a pop up in your application, but only in the summer, it would look something like this [(try it here)](https://runkit.com/sohamkamani/enums-in-js---boolean) :
 
 ```js
 let isSummer = true // or, let isSummer = false
@@ -26,7 +28,7 @@ if(isSummer){
 
 Now, lets look at the case where you have to change the theme of your application based on one of four seasons (summer, winter, autumn, and spring)
 
-If you come from a background where enums were not used before, you have probably used the hard-coded string method to implement something like this:
+If you come from a background where enums were not used before, you have probably used the hard-coded string method to implement something like this [(try it here)](https://runkit.com/sohamkamani/enums-in-js---hard-coded-strings):
 
 ```js
 let season = 'summer'
@@ -55,7 +57,7 @@ While this is easy to fix in the above example, life becomes much harder when yo
 
 # Enumerations with objects
 
-A better way to implement enumerations is through objects. Consider this refactored version of the above example:
+A better way to implement enumerations is through objects. Consider this refactored version of the above example [(try it here)](https://runkit.com/sohamkamani/enums-in-js---object-enum):
 
 ```js
 const seasons = {
@@ -94,7 +96,7 @@ The `seasons` objects is now an implementation of an enum with four possible val
 
 # Namespaced enums
 
-We can also embed enums within each other, incase we need namespaces:
+We can also embed enums within each other, incase we need namespaces [(try it here)](https://runkit.com/sohamkamani/enums-in-js---namespaced-enums):
 
 ```js
 const seasons = {
