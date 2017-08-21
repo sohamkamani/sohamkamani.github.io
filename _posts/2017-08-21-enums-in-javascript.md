@@ -3,6 +3,8 @@ layout: post
 title: Using enums (enumerations) in javascript 📃
 date: 2017-08-21T01:45:12.000Z
 categories: javascript enums
+main_image: "/assets/images/posts/enums-in-js/text-editor-completion.png"
+description: "Enums in javascript: what they are, and how and when to use them"
 comments: true
 ---
 
