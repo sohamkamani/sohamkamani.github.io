@@ -6,7 +6,9 @@
                 {{ content }}
             </div>
             <aside class="sidebar">
+                {% if page.show_sidebar != false %}
                 {% include sidebar.html %}
+                {% endif %}
             </aside>
         </div>
         {% include footer.html %}
