@@ -3,13 +3,16 @@
     position: relative;
 
     .wrapper {
-      margin-left: 350px;
+      margin-left: 320px;
+      @media screen and (max-width: 767px) {
+        margin-left: auto;
+      }        
     }
 
     .sidebar {
       width: 250px;
       position: absolute;
-      top: 50px;
+      top: 30px;
       left: 50px;
       font-size: 0.8em;
       font-family: Helvetica, sans-serif;
@@ -24,6 +27,17 @@
         padding: 15px;
         margin-bottom: 15px;
         border-radius: 6px;
+      }
+
+      @media screen and (max-width: 767px) {
+        &__author-info{
+          display: none;
+        }
+        &__box{
+          border: none;
+        }
+        position: static;
+        width: auto;
       }
     }
   }
