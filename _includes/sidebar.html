@@ -1,0 +1,30 @@
+<div class="sidebar__box">
+    <div class="sidebar__share-page" style="text-align:center;">
+        <span style="font-size:0.7em;color:grey;text-align:center;">SHARE THIS ARTICLE</span> <br/>
+        <a href="https://twitter.com/intent/tweet?text={{ page.title }}&url={{ site.url }}{{ page.url }}&via={{ site.twitter_username }}&related={{ site.twitter_username }}"
+            rel="nofollow" target="_blank" title="Share on Twitter" class="twitter-share-button" data-size="large">Twitter</a>
+        <a href="https://facebook.com/sharer.php?u={{ site.url }}{{ page.url }}" rel="nofollow" target="_blank" title="Share on Facebook"
+            class="share-page__icon"><i class="fa fa-facebook-square"></i></a>
+        <a href="https://plus.google.com/share?url={{ site.url }}{{ page.url }}" rel="nofollow" target="_blank" title="Share on Google+"
+            class="share-page__icon" style="color:#DB4C3E"><i class="fa fa-google-plus-square"></i></a>
+    </div>
+
+
+    <h3 style="text-align:center;">
+        <strong>Written by Soham Kamani</strong>
+    </h3>
+    <p style="color:gray;">
+        <a>Author</a>, developer, and <a>open source enthusiast</a>. I also write on my <a>blog</a> sometimes.
+    </p>
+    <p style="text-align:center;">
+        <a class="twitter-follow-button" href="https://twitter.com/sohamkamani" data-show-count="false" >Follow @sohamkamani</a>
+    </p>
+    <p style="text-align:center;">
+        <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+    </p>
+</div>
+
+<div class="sidebar__box">
+
+    {% include related-posts.html %}
+</div>

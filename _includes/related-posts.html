@@ -1,0 +1,48 @@
+<div class="relatedPosts">
+
+  <h3 style="text-align:center;">Related posts</h3>
+
+  {% comment %}---> the maximum number of related to posts 
+                    to be printed {% endcomment %}
+  {% assign maxRelated = 5 %}
+
+  {% comment %}---> the minimum number of common tags 
+                    to have for a post to be considered 
+                    as a related post {% endcomment %}
+  {% assign minCommonTags =  1 %}
+
+  {% assign maxRelatedCounter = 0 %}
+
+  {% for post in site.posts %}
+
+    {% assign sameTagCount = 0 %}
+    {% assign commonTags = '' %}
+
+    {% for tag in post.categories %}
+      {% comment %}---> Only compare if post is 
+                        not same as current page {% endcomment %}
+      {% if post.url != page.url %}
+        {% if page.categories contains tag %}
+          {% assign sameTagCount = sameTagCount | plus: 1 %}
+          {% capture tagmarkup %} <span class="label label-default">{{ tag }}</span> {% endcapture %}
+          {% assign commonTags = commonTags | append: tagmarkup %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+
+    {% if sameTagCount >= minCommonTags %}
+      <ul class="related-posts__list">
+        <li>
+          <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+          <span style="display:none;" >{{ commonTags }}</span>
+        </li>
+      </ul>
+      {% assign maxRelatedCounter = maxRelatedCounter | plus: 1 %}
+      {% if maxRelatedCounter >= maxRelated %}
+        {% break %}
+      {% endif %}
+    {% endif %}
+
+  {% endfor %}
+
+</div>

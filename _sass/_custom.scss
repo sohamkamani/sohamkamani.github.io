@@ -1,56 +1,89 @@
-.main-container{
+.main-container {
+  .page-content {
+    position: relative;
 
-    table, tr, td, th {
-      border-collapse: collapse;
-      border: 1px solid #bbb;
+    .wrapper {
+      margin-left: 350px;
     }
 
-    tr, td, th {
-      padding: 3px;
+    .sidebar {
+      width: 250px;
+      position: absolute;
+      top: 50px;
+      left: 50px;
+      font-size: 0.8em;
+      font-family: Helvetica, sans-serif;
+      a {text-decoration: none;}
+
+      &__share-page {
+        font-size: 1.2em;
+      }
+
+      &__box {
+        border: 3px solid lightgray;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 6px;
+      }
     }
-    .site-header{
-      font-family: $title-font-family;
-      background-color: #2196F3;
-        -webkit-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.75);
-        -moz-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.75);
-        box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.75);
-        border: 0;
-        text-align: center;
-        a{
-        color: #fff;
-        &:hover{
-            text-decoration: none;
-            color: #BBDEFB;
-        }
-        }
+  }
+
+  table,
+  tr,
+  td,
+  th {
+    border-collapse: collapse;
+    border: 1px solid #bbb;
+  }
+
+  tr,
+  td,
+  th {
+    padding: 3px;
+  }
+  .site-header {
+    font-family: $title-font-family;
+    background-color: #2196f3;
+    -webkit-box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.75);
+    border: 0;
+    text-align: center;
+    a {
+      color: #fff;
+      &:hover {
+        text-decoration: none;
+        color: #bbdefb;
+      }
     }
+  }
 }
 
-.share-page{
-  &__icon{
+.share-page {
+  &__icon {
     font-size: 2em;
   }
 }
 
-.social-media-list{
-  &__icon{
+.social-media-list {
+  &__icon {
     font-size: 1.8em;
-    &:hover{
+    &:hover {
       text-decoration: none;
     }
   }
 }
 
-.site-footer{
-  &__wrapper{
+.site-footer {
+  &__wrapper {
     max-width: 1200px;
     padding: 0 20px;
     margin: auto;
   }
 
-  &__dp{
-    width:150px;
-    height:150px;
+  &__dp {
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     overflow: hidden;
   }
@@ -62,9 +95,15 @@ pre > code {
 
 .google-docs-excel-table {
   width: 100%;
-  height : 200px;
+  height: 200px;
 }
 
 .footnotes {
   font-size: 12px;
+}
+
+.related-posts{
+  &__list {
+    margin-left: 12px;
+  }
 }
