@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Golang Channels - a tutorial on using channels in Go ➡️
+title: An introduction to using and visualizing channels in Go ➡️
 date: 2017-08-24T01:45:12.000Z
 categories: go golang channel
 description: "An introduction on channels in Go, and how to visualize them"
