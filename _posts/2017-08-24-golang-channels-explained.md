@@ -19,7 +19,7 @@ At the end of this article, you should have all you need to understand how chann
 
 To understand channels properly, it is essential to know how to visualize Goroutines first.
 
-Let's start with a simple Goroutine, that takes a number, multiplies it by two, and prints its value:
+Let's start with a simple Goroutine, that takes a number, multiplies it by two, and prints its value ([Run this code](https://play.golang.org/p/PFhBOUzKnE)):
 
 ```go
 package main
@@ -58,7 +58,7 @@ The problems with this implementation (that can also be seen from the diagram), 
 
 ## Example #1 - Adding a channel to our goroutine 
 
-Let's now look at some code that introduces how to make and use a channel in Go :
+Let's now look at some code that introduces how to make and use a channel in Go ([Run this code](https://play.golang.org/p/mIRGjGxYM3)):
 
 ```go
 package main
@@ -150,7 +150,7 @@ The __dotted arrow__ added here is to show that it is the `main` function that s
 
 ## Example #2 - Two single directional channels
 
-Example #1 can be implemented another way, by using 2 channels : one for sending data to the goroutine, and another for receiving the result.
+Example #1 can be implemented another way, by using 2 channels : one for sending data to the goroutine, and another for receiving the result ([Run this code](https://play.golang.org/p/aQIBDS99_d)).
 
 ```go
 package main
@@ -190,3 +190,62 @@ func multiplyByTwo(in <-chan int, out chan<- int) {
 Now, in addition to `main`, `multiplyByTwo` is also divided into 2 parts: the part before and after the point where we wait on the `in` channel (`num := <- in`)
 
 ![go routines as blocks with channel](/assets/images/posts/go-channels/goroutines-4.svg)
+
+# Example #3 - Multiple concurrent goroutines
+
+Now consider the case where we want to run `multiplyByTwo` concurrently 3 times ([Run this code](https://play.golang.org/p/8ocrB53QS_)) :
+
+```go
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	out := make(chan int)
+	in := make(chan int)
+
+	// Create 3 `multiplyByTwo` goroutines.
+	go multiplyByTwo(in, out)
+	go multiplyByTwo(in, out)
+	go multiplyByTwo(in, out)
+
+	// Up till this point, none of the created goroutines actually do
+	// anything, since they are all waiting for the `in` channel to 
+	// receive some data
+	in <- 1
+	in <- 2
+	in <- 3
+
+	// Now we wait for each result to come in
+	fmt.Println(<-out)
+	fmt.Println(<-out)
+	fmt.Println(<-out)
+}
+
+func multiplyByTwo(in <-chan int, out chan<- int) {
+	fmt.Println("Initializing goroutine...")
+	num := <-in
+	result := num * 2
+	out <- result
+}
+```
+
+It is important to note that there is no guarantee as to which goroutine will accept which input, or which goroutine will return an output first. All the `main` function "knows", is that it is sending some data into the `in` channel, and expects some data to be received on the `out` channel.
+
+This can be slightly harder to visualize, but hang in there!
+
+![go routines as blocks with channel](/assets/images/posts/go-channels/goroutines-5.svg)
+
+The multiple concurrent goroutines require a different visualization for channels. Here, we see a channel as a kind of "pool" of data (formally known as a buffer). For the purple channel (`in`), the `main` function puts in data, and one of the initialized goroutines receive the data. _There is no information regarding which goroutine takes which data_. This is the same for the green `out` channel going back into the `main` routine.
+
+The `main` routine is now split into 4 parts, since 3 parts now correspond to the 3 times we have to wait ont he `out` channel (as described by the 3 `fmt.Println(<-out)` statements), and another part for the operations before the first `fmt.Println(<-out)` statement.
+
+The `multiplyByTwo` goroutines on their own, look (and function) the same as before.
+
+## Going forward from here
+
+A lot of the time, programs written in Go are highly confusing because of the concurrency and asynchronous nature of the code. Visualizing your code before you proceed to write it (or for that matter, visualizing someone else's code before you modify it), can help a great deal and actually save you time in understanding.
+
+All this being said, channels in Go make concurrent programming _much_ easier than it would be without them, and its hard to appreciate the amount of code that we `don't` have to write because of them. Hopefully, these visualizations make it even easier.
