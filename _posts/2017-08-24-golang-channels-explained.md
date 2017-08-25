@@ -13,6 +13,8 @@ At first, everything about channels seems confusing and unintuitive. The fact th
 
 At the end of this article, you should have all you need to understand how channels work in Go.
 
+<!-- more -->
+
 ## Visualizing Goroutines
 
 To understand channels properly, it is essential to know how to visualize Goroutines first.
