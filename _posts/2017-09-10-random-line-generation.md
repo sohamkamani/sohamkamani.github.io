@@ -65,9 +65,11 @@ comments: true
 
 Random sequences are a bunch of random numbers arranged one after the other.
 
-Something like this : <span id="random-sequence"></span>
+Something like this : <span id="random-sequence">4, 6, 10, -6, -2, 1</span>
 
 Seems straightforward right? But, what if we wanted to bring some order to these sequences, while still retaining their randomness?
+
+<!-- more -->
 
 To get a sense of what this means, take a look at these charts :
 
@@ -213,9 +215,31 @@ It's not a coincidence that the random force sequence more accurately depicts re
 
 So, when you want to give something random motion, you don't simply randomize its position. You randomize the thing that _changes_ its position, by randomizing the thing that _changes its change_ in position.
 
+This can also be applied to almost any dynamic quantity, like stock prices or electricity, and can be extended in multiple dimensions (just like how two dimensional motion was simulated) to simulate multidimensional quantities (say, if we wanted to add a third dimension + direction orientation) to our existing simulation.
 
+_The source code for the chart generation and animation can be found [here](https://github.com/sohamkamani/blog-example__random-motion-generator)_
+
+<script src="/assets/scripts/randomness.bundle.js"></script>
 <script>
   const randomSequence = [0,0,0,0,0,0,0,0,0,0].map(()=> Math.floor(Math.random() * 100))
   document.getElementById('random-sequence').innerHTML = randomSequence
 </script>
-<script src="/assets/scripts/randomness.bundle.js"></script>
+<script>
+var hitButton = function(eName) {
+  return function() {
+    window.ga &&
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'Buttons',
+        eventAction: 'click',
+        eventLabel: eName
+      })
+  }
+}
+
+document.getElementById('d0regen').addEventListener('click', hitButton('d0regen'))
+document.getElementById('d1regen').addEventListener('click', hitButton('d1regen'))
+document.getElementById('d2regen').addEventListener('click', hitButton('d2regen'))
+document.getElementById('c-regen-sample').addEventListener('click', hitButton('c-regen-sample'))
+
+</script>
