@@ -15,6 +15,8 @@ With this tutorial, I hope to find the middle ground and provide a single resour
 
 The only prerequisite for this tutorial is a beginner level understanding of the Go programming language, and a tiny bit of knowledge about SQL (which you can find in a 15 minute read [here](/blog/2016/07/07/a-beginners-guide-to-sql/)).
 
+<!-- more -->
+
 ## "Full Stack" ?
 
 We are going to build a community encyclopedia of birds. This website will :
@@ -79,6 +81,67 @@ Go ahead and make a similar directory for your project. If you haven't made an o
 This location on your computer will henceforth be referred to as your "project directory"
 
 ## Starting an HTTP server
+
+Inside your project directory, create a file called `main.go` inside your project directory :
+
+```sh
+touch main.go
+```
+
+This file will contain the code to start your server :
+
+```go
+// This is the name of our package
+// Everything with this package name can see everything
+// else inside the same package, regardless of the file they are in
+package main
+
+// These are the libraries we are going to use
+// Both "fmt" and "net" are part of the Go standard library
+import (
+	// "fmt" has methods for formatted I/O operations (like printing to the console)
+	"fmt"
+	// The "net/http" library has methods to implement HTTP clients and servers
+	"net/http"
+)
+
+func main() {
+	// The "HandleFunc" method accepts a path and a function as arguments
+	// (Yes, we can pass functions as arguments, and even trat them like variables in Go)
+	// However, the handler function has to have the appropriate signature (as described by the "handler" function below)
+	http.HandleFunc("/", handler)
+
+	// After defining our server, we finally "listen and serve" on port 8080
+	// The second argument is the handler, which we will come to later on, but for now it is left as nil,
+	// and the handler defined above (in "HandleFunc") is used
+	http.ListenAndServe(":8080", nil)
+}
+
+// "handler" is our handler function. It has to follow the function signature of a ResponseWriter and Request type
+// as the arguments.
+func handler(w http.ResponseWriter, r *http.Request) {
+	// For this case, we will always pipe "Hello World" into the response writer
+	fmt.Fprintf(w, "Hello World!")
+}
+```
+
+>`fmt.Fprintf`, unlike the other "printf" statements you may know, takes a "writer" as its first argument. The second argument is the data that is piped into this writer. The output therefore appears according to where the writer moves it. In our case the ResponseWriter `w` writes the output as the response to the users request.
+
+You can now run this file :
+
+```sh
+go run main.go
+```
+
+And navigate to [http://localhost:8080](http://localhost:8080) in your browser, or by running the command :
+
+```sh
+curl localhost:8080
+```
+
+And see the output: "Hello World!"
+
+You have now successfully started an HTTP server in Go.
 
 ## Making routes
 
