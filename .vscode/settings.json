@@ -1,5 +1,10 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-  "editor.wordWrap": "bounded",
-  "cSpell.enabled": true
+  "editor.wordWrap": "wordWrapColumn",
+  "cSpell.enabled": true,
+  "editor.wordWrapColumn": 80,
+  "[markdown]": {
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.quickSuggestions": false
+  }
 }
