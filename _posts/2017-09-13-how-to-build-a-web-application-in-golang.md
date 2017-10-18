@@ -1,9 +1,10 @@
 ---
 layout: post
-title: Build a web application in Go (golang)
+title: Build a web application in Go (golang) 🕸
 date: 2017-09-13T01:45:12.000Z
 categories: go golang web
 description: "An end to end tutorial on how to build a full stack web application in golang"
+main_image: /assets/images/posts/golang-web-application/blog-golang-web-app-arch.svg
 comments: true
 ---
 
@@ -13,7 +14,7 @@ This is in no small part due to its speed and application performance, as well a
 
 With this tutorial, I hope to find the middle ground and provide a single resource which describes how to make a full stack web application in Go, along with sufficient test cases.
 
-The only prerequisite for this tutorial is a beginner level understanding of the Go programming language, and a tiny bit of knowledge about SQL (which you can find in a 15 minute read [here](/blog/2016/07/07/a-beginners-guide-to-sql/)).
+The only prerequisite for this tutorial is a beginner level understanding of the Go programming language.
 
 <!-- more -->
 
