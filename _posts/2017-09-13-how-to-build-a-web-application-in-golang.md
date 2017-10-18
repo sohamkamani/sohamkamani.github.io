@@ -17,6 +17,26 @@ The only prerequisite for this tutorial is a beginner level understanding of the
 
 <!-- more -->
 
+## Contents
+
+1. ["Full Stack" ?](#full-stack-)
+1. [Setting up your environment](#setting-up-your-environment)  
+	- [Set up your $GOPATH](#1-set-up-your-gopath)
+	- [Set up your directory structure](#2-set-up-your-directory-structure)
+	- [Creating your project directory](#3-creating-your-project-directory)
+1. [Starting an HTTP server](#starting-an-http-server)
+1. [Making routes](#making-routes)
+	- [Installing external libraries](#installing-external-libraries)
+	- [Testing](#testing)
+	- [Making our routing testable](#making-our-routing-testable)
+1. [Serving static files](#serving-static-files)
+	- [Create static assets](#create-static-assets)
+	- [Modify the router](#modify-the-router)
+	- [Testing the static file server](#testing-the-static-file-server)
+	- [Making a simple browser app](#making-a-simple-browser-app)
+1. [Adding the bird REST API handlers](#adding-the-bird-rest-api-handlers)
+1. [Adding a database](#adding-a-database)
+
 ## "Full Stack" ?
 
 We are going to build a community encyclopedia of birds. This website will :
@@ -32,11 +52,10 @@ This application will require three components :
 
 ![Image showing application architecture](/assets/images/posts/golang-web-application/blog-golang-web-app-arch.svg)
 
-### Contents
 
 ## Setting up your environment
 
->This section describes how to set up your environment and project structure for the first time. If you have built another project in go, or know the standard directory structure, you can skip this section and go to the [next one](/)
+>This section describes how to set up your environment and project structure for the first time. If you have built another project in go, or know the standard directory structure, you can skip this section and go to the [next one](#starting-an-http-server)
 
 ### 1. Set up your $GOPATH
 
@@ -243,8 +262,11 @@ import (
 )
 
 func TestHandler(t *testing.T) {
-	//Here, we form a new HTTP request. This is the request that's going to be passed to our handler.
-	// The first argument is the method, the second argument is the route (which we leave blank for now, and will get back to soon), and the third is the request body, which we don't have in this case.
+	//Here, we form a new HTTP request. This is the request that's going to be
+	// passed to our handler.
+	// The first argument is the method, the second argument is the route (which 
+	//we leave blank for now, and will get back to soon), and the third is the 
+	//request body, which we don't have in this case.
 	req, err := http.NewRequest("GET", "", nil)
 
 	// In case there is an error in forming the request, we fail and stop the test
@@ -252,14 +274,18 @@ func TestHandler(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	// We use Go's httptest library to create an http recorder. This recorder will act as the target of our http request
-	// (you can think of it as a mini-browser, which will accept the result of the http request that we make)
+	// We use Go's httptest library to create an http recorder. This recorder
+	// will act as the target of our http request
+	// (you can think of it as a mini-browser, which will accept the result of 
+	// the http request that we make)
 	recorder := httptest.NewRecorder()
 
-	// Create an HTTP handler from our handler function. "handler" is the handler function defined in our main.go file that we want to test
+	// Create an HTTP handler from our handler function. "handler" is the handler 
+	// function defined in our main.go file that we want to test
 	hf := http.HandlerFunc(handler)
 
-	// Serve the HTTP request to our recorder. This is the line that actually executes our the handler that we want to test
+	// Serve the HTTP request to our recorder. This is the line that actually
+	// executes our the handler that we want to test
 	hf.ServeHTTP(recorder, req)
 
 	// Check the status code is what we expect.
@@ -340,7 +366,8 @@ func TestRouter(t *testing.T) {
 	// Documentation : https://golang.org/pkg/net/http/httptest/#NewServer
 	mockServer := httptest.NewServer(r)
 
-	// The mock server we created runs a server and exposes its location in the URL attribute
+	// The mock server we created runs a server and exposes its location in the
+	// URL attribute
 	// We make a GET request to the "hello" route we defined in the router
 	resp, err := http.Get(mockServer.URL + "/hello")
 
@@ -381,7 +408,8 @@ Now we know that every time we hit the `GET /hello` route, we get a response of 
 func TestRouterForNonExistentRoute(t *testing.T) {
 	r := newRouter()
 	mockServer := httptest.NewServer(r)
-	// Most of the code is similar. The only difference is that now we make a //request to a route we know we didn't define, like the `POST /hello` route.
+	// Most of the code is similar. The only difference is that now we make a 
+	//request to a route we know we didn't define, like the `POST /hello` route.
 	resp, err := http.Post(mockServer.URL+"/hello", "", nil)
 
 	if err != nil {
@@ -445,14 +473,16 @@ func newRouter() *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc("/hello", handler).Methods("GET")
 
-	// Declare the static file directory and point it to the directory we just made
+	// Declare the static file directory and point it to the 
+	// directory we just made
 	staticFileDirectory := http.Dir("./assets/")
 	// Declare the handler, that routes requests to their respective filename.
 	// The fileserver is wrapped in the `stripPrefix` method, because we want to
 	// remove the "/assets/" prefix when looking for files.
 	// For example, if we type "/assets/index.html" in our browser, the file server
 	// will look for only "index.html" inside the directory declared above.
-	// If we did not strip the prefix, the file server would look for "./assets/assets/index.html", and yield an error
+	// If we did not strip the prefix, the file server would look for 
+	// "./assets/assets/index.html", and yield an error
 	staticFileHandler := http.StripPrefix("/assets/", http.FileServer(staticFileDirectory))
 	// The "PathPrefix" method acts as a matcher, and matches all routes starting
 	// with "/assets/", instead of the absolute route itself
@@ -472,21 +502,20 @@ func TestStaticFileServer(t *testing.T) {
 
 	// We want to hit the `GET /assets/` route to get the index.html file response
 	resp, err := http.Get(mockServer.URL + "/assets/")
-
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	// We want our status to be 200 (method not allowed)
-	if resp.StatusCode != http.StatusMethodNotAllowed {
+	// We want our status to be 200 (ok)
+	if resp.StatusCode != http.StatusOK {
 		t.Errorf("Status should be 200, got %d", resp.StatusCode)
 	}
 
 	// It isn't wise to test the entire content of the HTML file.
-	// Instead, we test that the content-type header is "text/html"
+	// Instead, we test that the content-type header is "text/html; charset=utf-8"
 	// so that we know that an html file has been served
 	contentType := resp.Header.Get("Content-Type")
-	expectedContentType := "text/html"
+	expectedContentType := "text/html; charset=utf-8"
 
 	if expectedContentType != contentType {
 		t.Errorf("Wrong content type, expected %s, got %s", expectedContentType, contentType)
@@ -570,7 +599,8 @@ Since we need to create our bird encyclopedia, lets create a simple HTML documen
           // Create the table row
           row = document.createElement("tr")
 
-          // Create the table data elements for the species and description columns
+          // Create the table data elements for the species and
+					// description columns
           species = document.createElement("td")
           species.innerHTML = bird.species
           description = document.createElement("td")
@@ -587,7 +617,7 @@ Since we need to create our bird encyclopedia, lets create a simple HTML documen
 </body>
 ```
 
-### Adding the bird REST API handlers
+## Adding the bird REST API handlers
 
 As we can see, we will need to implement two APIs in order for this application to work:
 1. `GET /bird` - that will fetch the list of all birds currently in the system
@@ -653,7 +683,8 @@ func createBirdHandler(w http.ResponseWriter, r *http.Request) {
 	// Append our existing list of birds with a new entry
 	birds = append(birds, bird)
 
-	//Finally, we redirect the user to the original HTMl page (located at `/assets/`)
+	//Finally, we redirect the user to the original HTMl page
+	// (located at `/assets/`), using the http libraries `Redirect` method
 	http.Redirect(w, r, "/assets/", http.StatusFound)
 }
 ```
@@ -667,14 +698,20 @@ The last step, is to add these handler to our router, in order to enable them to
 	return r
 ```
 
-TODO: test routing, and both handlers
+<!-- TODO: test routing, and both handlers -->
+The tests for both these handlers and the routing involved are similar to the previous tests we wrote for the `GET /hello` handler and static file server, and are left as an exercise for the reader. 
 
-## Connecting to a database
+>If you're lazy, you can still see the tests in the [source code](https://github.com/sohamkamani/blog_example__go_web_app/blob/master/bird_handlers_test.go)
 
-### Testing
+## Adding a database
 
-## Putting it all together
+So far, we have added persistence to our application, with the information about different birds getting stored and retrieved.
 
-### Integration tests
+However, this persistence is short lived, since it is in memory. This means that anytime you restart your application, all the data gets erased. In order to add _true_ persistence, we will need to add a database to our stack.
 
-## Further reading
+Until now, our code was easy to reason about and test, since it was a standalone application. Adding a database will add another layer of communication.
+
+You can read about how to integrate a postgres database into your Go application in my [next post](/blog/2017/10/18/golang-adding-database-to-web-application/)
+
+___You can find the source code for this post [here](https://github.com/sohamkamani/blog_example__go_web_app)___
+
