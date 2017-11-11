@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Adding a postgres database to a Go web application
+title: Adding a database to a Go web application
 date: 2017-10-18T01:45:12.000Z
 categories: go golang web postgres sql
 description: "A tutorial on integrating a database into your Go web application"
@@ -123,6 +123,21 @@ func (store *dbStore) GetBirds() ([]*Bird, error) {
 	}
 	return birds, nil
 }
+
+// The store variable is a package level variable that will be available for
+// use throughout our application code
+var store Store
+
+/*
+We will need to call the InitStore method to initialize the store. This will
+typically be done at the beginning of our application (in this case, when the server starts up)
+This can also be used to set up the store as a mock, which we will be observing
+later on
+*/
+func InitStore(s Store) {
+	store = s
+}
+
 ```
 
 There are lots of benefits to creating the store as an interface
@@ -164,7 +179,7 @@ func (s *StoreSuite) SetupSuite() {
 		stored as an instance variable,
 		as is the higher level `store`, that wraps the `db`
 	*/
-	connString := "dbname=temp sslmode=disable"
+	connString := "dbname=<your test db name> sslmode=disable"
 	db, err := sql.Open("postgres", connString)
 	if err != nil {
 		s.T().Fatal(err)
@@ -277,7 +292,11 @@ type Bird struct {
 
 func getBirdHandler(w http.ResponseWriter, r *http.Request) {
 	/*
-		The list of birds is now taken from the store instead of the package level variable we had earlier
+		The list of birds is now taken from the store instead of the package level  `birds` variable we had earlier
+
+		The `store` variable is the package level variable that we defined in 
+		`store.go`, and is initialized during the initialization phase of the 
+		application
 	*/
 	birds, err := store.GetBirds()
 
@@ -317,4 +336,199 @@ func createBirdHandler(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-## Mocking the store for testing its callers
+## Mocking the store
+
+Using the store in the request handlers was easy, as we just saw. The tricky part comes when you need to test the handlers. It would be unwise use an actual database connection for this :
+
+- We only want to test that the handler actually _called_ the stores `GetBirds` and `CreateBird` methods with the correct arguments.
+- By using an actual database connection, our tests will not be _unit tests_ since they would be implicitly testing the store as well, which would be out of its domain.
+
+One solution to this problem is to use a mock store. The mock store will serve two purposes:
+1. It will pretend to be the actual store. By this I mean that it will accept the same arguments, and return the same type of results as the actual store implementation, without actually interacting with the database
+2. It will allow us to inspect its method calls. This is important when you want to verify that a method was called, and had the correct arguments.
+
+The mock store is defined in a new file `store_mock.go`:
+
+```go
+package main
+
+import (
+	"github.com/stretchr/testify/mock"
+)
+
+// The mock store contains additonal methods for inspection
+type MockStore struct {
+	mock.Mock
+}
+
+func (m *MockStore) CreateBird(bird *Bird) error {
+	/*
+		When this method is called, `m.Called` records the call, and also
+		returns the result that we pass to it (which you will see in the
+		handler tests)
+	*/
+	rets := m.Called(bird)
+	return rets.Error(0)
+}
+
+func (m *MockStore) GetBirds() ([]*Bird, error) {
+	rets := m.Called()
+	/*
+		Since `rets.Get()` is a generic method, that returns whatever we pass to it,
+		we need to typecast it to the type we expect, which in this case is []*Bird
+	*/
+	return rets.Get(0).([]*Bird), rets.Error(1)
+}
+
+func InitMockStore() *MockStore {
+	/*
+		Like the InitStore function we defined earlier, this function
+		also initializes the store variable, but this time, it assigns
+		a new MockStore instance to it, instead of an actual store
+	*/
+	s := new(MockStore)
+	store = s
+	return s
+}
+```
+
+Now that we have defined the mock store, we can use it in our tests:
+
+```go
+package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"net/http"
+	"net/http/httptest"
+	"net/url"
+	"strconv"
+	"testing"
+)
+
+func TestGetBirdsHandler(t *testing.T) {
+	// Initialize the mock store
+	mockStore := InitMockStore()
+
+	/* Define the data that we want to return when the mocks `GetBirds` method is
+	called
+	Also, we expect it to be called only once
+	*/
+	mockStore.On("GetBirds").Return([]*Bird{{"sparrow", "A small harmless bird"}}, nil).Once()
+
+	req, err := http.NewRequest("GET", "", nil)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	recorder := httptest.NewRecorder()
+
+	hf := http.HandlerFunc(getBirdHandler)
+
+	// Now, when the handler is called, it should cal our mock store, instead of
+	// the actual one
+	hf.ServeHTTP(recorder, req)
+
+	if status := recorder.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+
+	expected := Bird{"sparrow", "A small harmless bird"}
+	b := []Bird{}
+	err = json.NewDecoder(recorder.Body).Decode(&b)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	actual := b[0]
+
+	if actual != expected {
+		t.Errorf("handler returned unexpected body: got %v want %v", actual, expected)
+	}
+
+	// the expectations that we defined in the `On` method are asserted here
+	mockStore.AssertExpectations(t)
+}
+
+func TestCreateBirdsHandler(t *testing.T) {
+
+	mockStore := InitMockStore()
+	/*
+	 Similarly, we define our expectations for th `CreateBird` method.
+	 We expect the first argument to the method to be the bird struct
+	 defined below, and tell the mock to return a `nil` error
+	*/
+	mockStore.On("CreateBird", &Bird{"eagle", "A bird of prey"}).Return(nil)
+
+	form := newCreateBirdForm()
+	req, err := http.NewRequest("POST", "", bytes.NewBufferString(form.Encode()))
+
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Add("Content-Length", strconv.Itoa(len(form.Encode())))
+	if err != nil {
+		t.Fatal(err)
+	}
+	recorder := httptest.NewRecorder()
+
+	hf := http.HandlerFunc(createBirdHandler)
+
+	hf.ServeHTTP(recorder, req)
+
+	if status := recorder.Code; status != http.StatusFound {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+	mockStore.AssertExpectations(t)
+}
+
+func newCreateBirdForm() *url.Values {
+	form := url.Values{}
+	form.Set("species", "eagle")
+	form.Set("description", "A bird of prey")
+	return &form
+}
+
+```
+
+We can visulaize the mock store, and its interaction with the rest of our code :
+
+![mock store data flow](/assets/images/posts/golang-web-application/db_mock_flow.svg)
+
+To verify the results, run the tests with `go test`, and they should all run successfully.
+
+## Finishing touches
+
+Now that we have tested that our store is working, _and_ that our handlers are calling the store correctly, the only thing left to do is add the code for initializing the store on application start up. For this , we will edit the `main.go` file's `main` function :
+
+```go
+
+import (
+	//...
+	// The libn/pq driver is used for postgres
+	_ "github.com/lib/pq"
+	//...
+)
+
+func main(){
+	// ...
+	connString := "dbname=<your main db name> sslmode=disable"
+	db, err := sql.Open("postgres", connString)
+
+	if err != nil {
+		panic(err)
+	}
+	err = db.Ping()
+
+	if err != nil {
+		panic(err)
+	}
+
+	InitStore(&dbStore{db: db})
+	//...
+}
+```
+
+The source code for this post can be found [here](https://github.com/sohamkamani/blog_example__go_web_db)
