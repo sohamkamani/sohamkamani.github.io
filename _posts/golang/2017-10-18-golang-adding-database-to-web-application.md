@@ -15,6 +15,8 @@ It is not enough to just add a driver and query the database in your code if you
 2. How will you ensure that everyone else who wants to run the application (including other servers and VMs) are using the same database structure as the one you developed?
 3. How do you most effectively make use of your computing resources?
 
+<!-- more -->
+
 First, lets start with adding the database to an existing application.
 
 ## Our application
