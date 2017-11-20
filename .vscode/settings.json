@@ -6,5 +6,11 @@
   "[markdown]": {
     "editor.wordWrap": "wordWrapColumn",
     "editor.quickSuggestions": false
-  }
+  },
+  "spellright.language": "en",
+  "spellright.documentTypes": [
+    "markdown",
+    "latex",
+    "plaintext"
+  ]
 }
