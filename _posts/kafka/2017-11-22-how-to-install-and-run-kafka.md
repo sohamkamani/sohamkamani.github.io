@@ -4,6 +4,7 @@ title:  How to install and run Kafka on your machine 🌪
 date:   2017-11-22 08:45:12
 categories: kafka
 comments: true
+main_image: "/assets/images/posts/kafka/basic_arch.svg"
 ---
 
 [Apache Kafka](https://kafka.apache.org/) is a distributed streaming platform. It can be used for anything ranging from a distributed message broker to a platform for processing data streams.
