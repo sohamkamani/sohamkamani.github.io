@@ -417,7 +417,9 @@ func TestGetBirdsHandler(t *testing.T) {
 	called
 	Also, we expect it to be called only once
 	*/
-	mockStore.On("GetBirds").Return([]*Bird{{"sparrow", "A small harmless bird"}}, nil).Once()
+	mockStore.On("GetBirds").Return([]*Bird{
+		{"sparrow", "A small harmless bird"}
+	}, nil).Once()
 
 	req, err := http.NewRequest("GET", "", nil)
 
