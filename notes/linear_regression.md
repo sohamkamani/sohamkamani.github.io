@@ -97,3 +97,96 @@ Where `TSS` is the total sum of squares:
 ```
 TSS = sum((yi - y_mean)^2)
 ```
+
+## Multiple linear regression
+
+The linear regression that we talked about until now only took one predictor into consideration. If there was more than one predictor, we would use multiple linear regression. In this case, `Y` would be expressed as:
+
+```
+Y = BB0 + BB1*X1 + BB2*X2 + ... + BBp*Xp
+```
+
+Where `X1..Xp` are the _p_ predictors of Y.
+
+In order to estimate `BB0..BBp` to minimize least squares, we would need to use complex matrix calculation and it should ideally be done programatically.
+
+### F statistic
+
+Similar to regression with one predictor, we would like to find out if there is any relationship between _at least_ one of the predictors, and the predicted value.
+
+We used the t-statistic for this before and measured the probability that there actually was a relationship, and it was not by random chance. We could similarly calculate the t statistic and p value for each of the predictors and see if any of the predictors actually has a relationship with the predicted value.
+
+The problem with this is that when we increase the number of predictors, and with many data points, there is a much higher chance that _at least some_ of the predictors actually will show a high p value for their individual t statistic, which would be caused just by chance.
+
+The F statistic takes the number of predictors into consideration as well and is given by:
+
+```
+F = ((TSS - RSS)/p)/(RSS/(n - p - 1))
+```
+
+Here, our H0 is that : `BB1 = BB2 = ... = BBp = 0`
+
+The F statistic follows the F distribution. So, for any given F statistic we can calculate its corresponding p value, which we can then use to reject H0.
+
+An F statistic closer to 1 indicates there is no relationship between the predictors and Y, while one which is greater than 1 suggests that there is.
+
+### RSE for multiple variables
+
+The R^2 statistic always increases by adding new variables since the the training data can be fit more accurately, even with a weak association of a predictor variable, and we calculate R^2 from the training data.
+
+This happens because the RSS decreases. The RSE, however, need not decrease, since it's given by:
+
+```
+RSE = sqrt(RSS/(n - p - 1))
+```
+
+So if adding another variable leads to only a tiny increase in RSS (smaller than the increase because of adding 1 to p), then the RSE may increase.
+
+## Qualitative predictors
+
+These are predictors which have distinct values (male or female, ethnicity, species).
+
+These variables can be included in regression by using binary variables.
+
+### For variables with 2 choices
+
+The predictor can be included in the equation as `BB*X`, where BB is the coefficient which we have to determine, and X=0 if the choice is the first one, and 1 if it's not.
+
+### For variables with more than 2 choices
+
+If there are `k` possible choices, we need `k - 1` variables to express their effect. For example, if there are 4 choices, we could express it as:
+
+```
+BB1*X1 + BB2*X2 + BB3*X3
+```
+
+If it was choice 1, then X1, X2 and X3 are all 0.
+for choice 2, X1=1, and X2=X3=0
+and so on.
+
+## Extensions of the linear model
+
+There are many cases where you may want to use variables other than linear ones:
+
+1. If two variables are dependent on each other, you can use `X1*X2`
+2. Sometimes, the relationship may be between a non linear form of X, like `X^2`, `log(X)`, or `sqrt(X)`
+
+## Common problems occurring in regression
+
+1. If the response and predictor relations are non linear. This can be measure be looking at the plot of errors. The solution is to try with some of the extensions as mentioned above.
+2. If the variance of the irreducible error term may itself vary. This may occur more commonly in time series, where the random error may persist for some time.
+3. Correlation of error terms. May happen if outlier data if obtained from the same source.
+4. High leverage points, which are outliers in the predictor values (in the X space). Can be computed using the leverage statistic. High leverage points may happen in 2 dimensions as well, which means they do not have any high leverage in a single dimension alone, but do have it, if we consider the other dimensions together.
+5. Collinearity - if the predictors terms are related to each other. This can be measured by computing the variance inflation factor (VIF). The VIF is equal to `1/(1-R^2)`, where the `R^2` statistic is obtained from regressing the variable whose VIF is to be found, onto the remaining variables. A VIF close to 1 tells us that there is probably no collinearity, while a VIF much greater than 1 suggests that some collinearity exists.
+
+## KNN regression
+
+KNN regression is calculated by averaging the K nearest neighbors of the point in question.
+
+```
+f(X) = sum<p=1..K>(Yp)/K
+```
+
+The graph plotted by using KNN regression follows the points more closely, and does not take a linear form, like before. 
+
+On average, KNN works well for datasets with low number of dimensions, since neighboring points are normally closer together and the average gives a good estimate of the value of `Y`. However, as the number of dimensions increase, points which are seemingly close together, may be far apart when considering all dimensions. We can then see a rise in the MSE of KNN regression as compared to linear regression.
