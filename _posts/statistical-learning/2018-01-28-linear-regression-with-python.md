@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Linear regression with Python"
+title:  "Linear regression with Python 📈"
 date:   2018-01-28 08:45:12
 categories: python math machine_learning statistical_learning
 comments: true
