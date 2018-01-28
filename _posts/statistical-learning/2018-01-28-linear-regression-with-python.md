@@ -28,6 +28,8 @@ In order to perform linear regression with python, we will need to:
 3. Fit our model using the training data
 4. Test our model using the testing data
 
+<!-- more -->
+
 ## Simple linear regression using "scikit learn"
 
 In order to use scikit learn to perform linear regression, you will have to [install it first](http://scikit-learn.org/stable/install.html)
