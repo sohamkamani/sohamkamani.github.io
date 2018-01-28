@@ -12,25 +12,25 @@ Where `E` is the random error introduced (and not caused due to the model itse;f
 
 ## Estimating β0 and β1
 
-In order to estimate BB1 and BB0, we need to get familiar with a concept called __residual sum of squares__ (RSS). This is the sum of the square of the errors between each value of `Y`, and the value of `BB0 + BB1*X` (which is the predicted value of `Y`)
+In order to estimate β1 and β0, we need to get familiar with a concept called __residual sum of squares__ (RSS). This is the sum of the square of the errors between each value of `Y`, and the value of `β0 + β1*X` (which is the predicted value of `Y`)
 
 We can represent RSS as :
 
 ```
-RSS = (y1 - BB0 - BB1*x1)^2 + (y2 - BB0 - BB1*x2)^2 + ... + (yi - BB0 - BB1*xi)^2 
+RSS = (y1 - β0 - β1*x1)^2 + (y2 - β0 - β1*x2)^2 + ... + (yi - β0 - β1*xi)^2 
 ```
 
-In order to find out the best approximations of `BB0` and `BB1`, we need to find the minimum RSS. We can do this by taking the partial differential of RSS with respect to `BB1` and `BB2` and equating that to zero.
+In order to find out the best approximations of `β0` and `β1`, we need to find the minimum RSS. We can do this by taking the partial differential of RSS with respect to `β1` and `β2` and equating that to zero.
 
 That is,
 
 ```
-d(RSS)/d(BB0) = 0
+d(RSS)/d(β0) = 0
 
-d(RSS)/d(BB1) = 0
+d(RSS)/d(β1) = 0
 ```
 
-We will then get 2 equations for the values of `BB0` and `BB1`.
+We will then get 2 equations for the values of `β0` and `β1`.
 
 ## Standard error of the mean of Y
 
@@ -44,7 +44,7 @@ SD(Y) = SE(Y)^2 = SD(Y)^2/n
 
 `SD(Y)` is the standard deviation of the samples of Y, and `n` is the number of samples provided. We can then observe that the greater the number of samples, the lesser the standard error of the mean, which means the closer the mean is to the actual mean.
 
-Similarly, there are formulas for the standard error of the estimates of BB0 and BB1 (pg 66). 
+Similarly, there are formulas for the standard error of the estimates of β0 and β1 (pg 66). 
 
 These standard errors are directly proportional to the square of the __residual standard error__(RSE), which is given by :
 
@@ -59,11 +59,11 @@ The residual sum of squares is more of an absolute measure of the total sum of e
 
 ## Confidence intervals
 
-THe most popularly used confidence interval is 95%, which means the probability of the true value lying within that interval is 95%. For BB0, and BB1, the interval is defined as :
+THe most popularly used confidence interval is 95%, which means the probability of the true value lying within that interval is 95%. For β0, and β1, the interval is defined as :
 
 ```
-BB0 +- 2*SE(BB0)
-BB1 +- 2*SE(BB1)
+β0 +- 2*SE(β0)
+β1 +- 2*SE(β1)
 ```
 
 ### t statistic and p values
@@ -71,10 +71,10 @@ BB1 +- 2*SE(BB1)
 The __t statistic__ measures how accurate the correlation between X and Y are. It is given by :
 
 ```
-t = BB1/SE(BB1)
+t = β1/SE(β1)
 ```
 
-To calculate the p value, we will have to make to hypotheses. The first one will hypothesize that there is no relation between X and Y, which  means that BB1 is zero (We call this H0). The second hypothesis says that there _is_ a relationship between X and Y, which means that BB1 != 0. (Since `Y = BB0 + BB1*X`, if BB1 is zero, that means Y does not depend on X)
+To calculate the p value, we will have to make to hypotheses. The first one will hypothesize that there is no relation between X and Y, which  means that β1 is zero (We call this H0). The second hypothesis says that there _is_ a relationship between X and Y, which means that β1 != 0. (Since `Y = β0 + β1*X`, if β1 is zero, that means Y does not depend on X)
 
 Now if we have more than ~30 data samples, the distribution of the t statistic is a normal probability distribution. If we consider H0, this normal distribution should be centered around 0. Now consider the t statistic we calculated using the formula above. What is the probability that we could get this value, _assuming that H0 was true_?
 
@@ -103,12 +103,12 @@ TSS = sum((yi - y_mean)^2)
 The linear regression that we talked about until now only took one predictor into consideration. If there was more than one predictor, we would use multiple linear regression. In this case, `Y` would be expressed as:
 
 ```
-Y = BB0 + BB1*X1 + BB2*X2 + ... + BBp*Xp
+Y = β0 + β1*X1 + β2*X2 + ... + βp*Xp
 ```
 
 Where `X1..Xp` are the _p_ predictors of Y.
 
-In order to estimate `BB0..BBp` to minimize least squares, we would need to use complex matrix calculation and it should ideally be done programatically.
+In order to estimate `β0..βp` to minimize least squares, we would need to use complex matrix calculation and it should ideally be done programatically.
 
 ### F statistic
 
@@ -124,7 +124,7 @@ The F statistic takes the number of predictors into consideration as well and is
 F = ((TSS - RSS)/p)/(RSS/(n - p - 1))
 ```
 
-Here, our H0 is that : `BB1 = BB2 = ... = BBp = 0`
+Here, our H0 is that : `β1 = β2 = ... = βp = 0`
 
 The F statistic follows the F distribution. So, for any given F statistic we can calculate its corresponding p value, which we can then use to reject H0.
 
@@ -150,14 +150,14 @@ These variables can be included in regression by using binary variables.
 
 ### For variables with 2 choices
 
-The predictor can be included in the equation as `BB*X`, where BB is the coefficient which we have to determine, and X=0 if the choice is the first one, and 1 if it's not.
+The predictor can be included in the equation as `β*X`, where β is the coefficient which we have to determine, and X=0 if the choice is the first one, and 1 if it's not.
 
 ### For variables with more than 2 choices
 
 If there are `k` possible choices, we need `k - 1` variables to express their effect. For example, if there are 4 choices, we could express it as:
 
 ```
-BB1*X1 + BB2*X2 + BB3*X3
+β1*X1 + β2*X2 + β3*X3
 ```
 
 If it was choice 1, then X1, X2 and X3 are all 0.
