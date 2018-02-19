@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Data races in Go(Golang) and how to fix them
+title: Data races in Go(Golang) and how to fix them 🏃‍♀️
 date: 2018-02-18T01:45:12.000Z
 categories: go golang
 description: "What is a data race? What causes it? How to fix it?"
@@ -10,6 +10,19 @@ comments: true
 Go is known for how easy it is to build concurrent programs in it. But, with all this concurrency, comes the possibility of the dreaded data race -- one of the hardest bugs to debug if you're ever unfortunate enough to encounter it in your code.
 
 In this post, we will go through a sample program that causes a data race, and detect the race condition with the [race detector](https://golang.org/doc/articles/race_detector.html) tool. We will then look at some of the methods to get around and solve the race condition, while still keeping the core logic of our code intact.
+
+<!-- more -->
+
+## Contents
+
+1. [The data race](#the-data-race)
+1. [Detecting a data race](#detecting-a-data-race)
+1. [Fixing data races](#fixing-data-races)
+    - [Blocking with waitgroups](#blocking-with-waitgroups)
+    - [Blocking with channels](#blocking-with-channels)
+    - [Returning a channel](#returning-a-channel)
+    - [Using a mutex](#using-a-mutex)
+1. [Conclusion](#conclusion)
 
 ## The data race
 
