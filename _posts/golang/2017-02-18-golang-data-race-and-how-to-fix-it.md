@@ -44,7 +44,7 @@ func getNumber() int {
 ```
 [Try it here](https://play.golang.org/p/TvaREY1QDFx)
 
-Here, we can see that the `getNumber` function is setting the value of `i` in a separate goroutine. We are also returning `i` from the function without any knowledge of whether out goroutine has completed or not. So now, there are two operations that are taking place:
+Here, we can see that the `getNumber` function is setting the value of `i` in a separate goroutine. We are also returning `i` from the function without any knowledge of whether our goroutine has completed or not. So now, there are two operations that are taking place:
 1. The value of `i` is being set to `5`
 2. The value of `i` is being returned from the function
 
@@ -263,3 +263,4 @@ For me, if i'm ever in doubt, waitgroups normally solve the problem with the lea
 >The core principle behind all the approaches explained in this section, is to prevent __simultaneous read and write access to the same variable or memory location__
 
 So, as long as you keep that in mind, you're good to go 👍
+
