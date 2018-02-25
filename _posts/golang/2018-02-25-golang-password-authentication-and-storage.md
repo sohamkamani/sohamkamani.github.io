@@ -27,7 +27,7 @@ We are going to build a simple HTTP server with two routes: `/signup` and `/sign
 - `/signup` will accept user credentials, and securely store them in our database.
 - `/signin` will accept user credentials, and authenticate them by comparing them with the entries in the database.
 
-We will be using the [bcrypt](https://godoc.org/golang.org/x/crypto/bcrypt) algorithm to hash and salt our passwords. If want to know more about hashing, salting, and the theory behind secure password storage, you can read my [previous post](https://godoc.org/golang.org/x/crypto/bcrypt).
+We will be using the [bcrypt](https://godoc.org/golang.org/x/crypto/bcrypt) algorithm to hash and salt our passwords. If want to know more about hashing, salting, and the theory behind secure password storage, you can read my [previous post](/blog/2017/01/01/web-security-password-storage/).
 
 >If you just want to see the working source code of this implementation, you can view it [here](https://github.com/sohamkamani/go-password-auth-example).
 
