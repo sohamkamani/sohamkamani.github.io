@@ -5,11 +5,15 @@ date: 2018-02-25T01:45:12.000Z
 categories: go golang
 description: "This post demonstrates how to sign up and sign in users using password authentication in Go"
 comments: true
+main_image: https://www.sohamkamani.com/assets/images/posts/go-misc/pw-storage-logo.png
 ---
 
 Any application that involves password storage and authentication has to make sure that its passwords are safely stored. You cannot simply store the username and password of your users the way you store other types of data. In fact, it should be impossible for you to actually _know_ the password of any of your users.
 
 This post will go through how to securely store your users password by building a very simple web application in Go, and using a Postgres database to store your users credentials.
+<!-- more -->
+
+![banner](/assets/images/posts/go-misc/pw-storage-logo.png)
 
 - [Overview](#overview)
 - [Initializing the web application](#initializing-the-web-application)
@@ -18,7 +22,6 @@ This post will go through how to securely store your users password by building 
 - [Implementing user sign up](#implementing-user-sign-up)
 - [Implementing user login](#implementing-user-login)
 
-<!-- more -->
 
 ## Overview
 

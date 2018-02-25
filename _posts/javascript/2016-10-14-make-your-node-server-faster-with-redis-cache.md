@@ -3,7 +3,7 @@ layout: post
 title: Make your node server faster by caching responses with redis ⏰
 date: 2016-10-14T08:45:12.000Z
 categories: javascript node js redis caching cache
-main_image: "/assets/images/posts/js-cache/logo.png"
+main_image: "https://www.sohamkamani.com/assets/images/posts/js-cache/logo.png"
 comments: true
 ---
 

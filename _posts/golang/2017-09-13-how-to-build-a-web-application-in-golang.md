@@ -4,7 +4,7 @@ title: Build a web application in Go (golang) 🕸
 date: 2017-09-13T01:45:12.000Z
 categories: go golang web
 description: "An end to end tutorial on how to build a full stack web application in golang"
-main_image: /assets/images/posts/golang-web-application/blog-golang-web-app-arch.svg
+main_image: https://www.sohamkamani.com/assets/images/posts/golang-web-application/blog-golang-web-app-arch.svg
 comments: true
 ---
 
