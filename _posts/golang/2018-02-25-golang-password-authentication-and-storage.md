@@ -18,6 +18,8 @@ This post will go through how to securely store your users password by building 
 - [Implementing user sign up](#implementing-user-sign-up)
 - [Implementing user login](#implementing-user-login)
 
+<!-- more -->
+
 ## Overview
 
 We are going to build a simple HTTP server with two routes: `/signup` and `/signin`, and use a Postgres DB to store user credentials.
