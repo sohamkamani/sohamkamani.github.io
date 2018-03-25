@@ -14,7 +14,7 @@ One way to do this is to store the users _"session"_. A session is started once 
 
 ![banner](/assets/images/posts/golang-session-auth/go-session-banner.png)
 
-
+<!-- more -->
 ## Overview
 
 In this post, we will look at how to store and persist the session of a logged in user, so that they can use other routes in our application.
